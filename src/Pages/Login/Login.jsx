@@ -11,9 +11,16 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import "./Login.css";
+import { useAuth } from "../../context/AuthContext/AuthContext";
+import { useLocation } from "react-router-dom";
 
 export const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [userPassword, setPassword] = useState("");
+  const location = useLocation();
+
+  const { handleLogin } = useAuth();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -21,6 +28,11 @@ export const Login = () => {
     event.preventDefault();
   };
 
+  const loginGuest = (user, pass) => {
+    setUserName(user);
+    setPassword(pass);
+    handleLogin(user, pass, location?.state?.from?.pathname);
+  };
   return (
     <Box
       sx={{
@@ -42,6 +54,7 @@ export const Login = () => {
           width: "85%",
           alignItems: "center",
           justifyContent: "center",
+          gap: "5px",
         }}
       >
         <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
@@ -53,13 +66,20 @@ export const Login = () => {
             <InputLabel htmlFor="outlined-adornment-username">
               Username
             </InputLabel>
-            <OutlinedInput id="outlined-adornment-username" label="Username" />
+            <OutlinedInput
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+              id="outlined-adornment-username"
+              label="Username"
+            />
           </FormControl>
           <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
             <InputLabel htmlFor="outlined-adornment-password">
               Password
             </InputLabel>
             <OutlinedInput
+              value={userPassword}
+              onChange={(e) => setPassword(e.target.value)}
               id="outlined-adornment-password"
               type={showPassword ? "text" : "password"}
               endAdornment={
@@ -77,7 +97,26 @@ export const Login = () => {
               label="Password"
             />
           </FormControl>
-          <Button variant="contained">Login</Button>
+          <Button
+            variant="contained"
+            onClick={() =>
+              handleLogin(
+                userName,
+                userPassword,
+                location?.state?.from?.pathname
+              )
+            }
+            sx={{ marginBottom: "3px" }}
+          >
+            Login
+          </Button>
+          <Button
+            variant="contained"
+            onClick={() => loginGuest("adarshbalika", "adarshBalika123")}
+            sx={{ marginBottom: "3px" }}
+          >
+            Login as Guest
+          </Button>
         </div>
       </Card>
     </Box>
