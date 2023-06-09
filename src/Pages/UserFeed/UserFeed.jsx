@@ -1,7 +1,7 @@
+import { useAuth } from "../../context/AuthContext/AuthContext";
+
 export const UserFeed = () => {
-  return (
-    <div>
-      <h1>Feed</h1>
-    </div>
-  );
+  const { loggedIn } = useAuth();
+
+  return <div>{loggedIn && <h1>Feed</h1>}</div>;
 };
