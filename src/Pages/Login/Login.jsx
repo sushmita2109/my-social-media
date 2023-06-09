@@ -11,9 +11,14 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import "./Login.css";
+import { useAuth } from "../../context/AuthContext/AuthContext";
 
 export const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [userPassword, setPassword] = useState("");
+
+  const { handleLogin } = useAuth();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -53,13 +58,20 @@ export const Login = () => {
             <InputLabel htmlFor="outlined-adornment-username">
               Username
             </InputLabel>
-            <OutlinedInput id="outlined-adornment-username" label="Username" />
+            <OutlinedInput
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+              id="outlined-adornment-username"
+              label="Username"
+            />
           </FormControl>
           <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
             <InputLabel htmlFor="outlined-adornment-password">
               Password
             </InputLabel>
             <OutlinedInput
+              value={userPassword}
+              onChange={(e) => setPassword(e.target.value)}
               id="outlined-adornment-password"
               type={showPassword ? "text" : "password"}
               endAdornment={
@@ -77,7 +89,12 @@ export const Login = () => {
               label="Password"
             />
           </FormControl>
-          <Button variant="contained">Login</Button>
+          <Button
+            variant="contained"
+            onClick={() => handleLogin(userName, userPassword)}
+          >
+            Login
+          </Button>
         </div>
       </Card>
     </Box>
