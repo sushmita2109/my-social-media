@@ -3,6 +3,7 @@ import { createContext } from "react";
 import { initialState } from "../../Reducer/AuthReducer/AuthReducer";
 import { authReducer } from "../../Reducer/AuthReducer/AuthReducer";
 import { useNavigate } from "react-router-dom";
+import { usePost } from "../PostContext/PostContext";
 
 export const AuthContext = createContext();
 
@@ -12,10 +13,6 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   const handleLogin = async (user, pass, location) => {
-    console.log(
-      "🚀 ~ file: AuthContext.js:15 ~ handleLogin ~ location:",
-      location
-    );
     try {
       const response = await fetch("/api/auth/login", {
         method: "POST",
