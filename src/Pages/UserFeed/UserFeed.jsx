@@ -1,5 +1,6 @@
 import { PostCard } from "../../components/PostCard/Postcard";
 import { useAuth } from "../../context/AuthContext/AuthContext";
+import "./UserFeed.css";
 
 export const UserFeed = () => {
   const { loggedIn } = useAuth();
@@ -8,8 +9,9 @@ export const UserFeed = () => {
     <div>
       {loggedIn && (
         <div>
-          {" "}
-          <PostCard />
+          <div className="postCard-container">
+            <PostCard />
+          </div>
         </div>
       )}
     </div>
