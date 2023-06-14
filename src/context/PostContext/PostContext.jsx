@@ -33,13 +33,15 @@ export const PostProvider = ({ children }) => {
         },
       });
       const data = await response.json();
-      console.log("🚀 ~ file: PostContext.jsx:36 ~ unlikePost ~ data:", data);
+      console.log(
+        "🚀 ~ file: PostContext.jsx:36 ~ updateUnlikePost ~ data:",
+        data
+      );
     } catch (e) {
       console.log(e);
     }
   };
   const updateLikes = async (postId) => {
-    console.log("🚀 ~ file: PostContext.jsx:27 ~ getLikes ~ postId:", postId);
     try {
       const response = await fetch(`api/posts/like/${postId}`, {
         method: "POST",
@@ -47,10 +49,7 @@ export const PostProvider = ({ children }) => {
           authorization: token,
         },
       });
-      console.log(
-        "🚀 ~ file: PostContext.jsx:31 ~ getLikes ~ response:",
-        response
-      );
+
       const data = await response.json();
       console.log("🚀 ~ file: PostContext.jsx:32 ~ getLikes ~ data:", data);
     } catch (e) {

@@ -14,7 +14,6 @@ export const ActionButtons = ({ postId }) => {
   const [fav, setFav] = useState(false);
 
   const handleFav = (like) => {
-    console.log("🚀 ~ file: ActionButtons.jsx:18 ~ handleFav ~ like:", like);
     if (like === false) {
       setFav(true);
 
