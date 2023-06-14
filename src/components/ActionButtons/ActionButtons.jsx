@@ -45,7 +45,7 @@ export const ActionButtons = ({ postId }) => {
         </Badge>
       </IconButton>
       <IconButton>
-        <ChatBubbleOutlineIcon />
+        <ChatBubbleOutlineIcon sx={{ color: "black" }} />
       </IconButton>
       <IconButton>
         <ShareIcon />
