@@ -6,7 +6,7 @@ import { ActionButtons } from "../ActionButtons/ActionButtons";
 
 export const PostCard = () => {
   const { postStates } = usePost();
-  console.log("🚀 ~ file: Postcard.jsx:5 ~ PostCard ~ postStates:", postStates);
+
   return (
     <>
       <h1>Card</h1>
@@ -23,7 +23,7 @@ export const PostCard = () => {
             </div>
 
             <p className="post-content">{post.content}</p>
-            <ActionButtons />
+            <ActionButtons postId={post._id} />
           </Card>
         ))}
     </>

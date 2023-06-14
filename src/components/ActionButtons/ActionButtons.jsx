@@ -7,12 +7,27 @@ import TurnedInNotIcon from "@mui/icons-material/TurnedInNot";
 import Badge from "@mui/material/Badge";
 import "./ActionButtons.css";
 import { useState } from "react";
+import { usePost } from "../../context/PostContext/PostContext";
 
-export const ActionButtons = () => {
+export const ActionButtons = ({ postId }) => {
+  const { updateLikes, updateUnlikePost } = usePost();
   const [fav, setFav] = useState(false);
+
+  const handleFav = (like) => {
+    if (like === false) {
+      setFav(true);
+
+      updateLikes(postId);
+    }
+    if (like === true) {
+      setFav(false);
+
+      updateUnlikePost(postId);
+    }
+  };
   return (
     <div className="buttons-container">
-      <IconButton onClick={() => setFav(!fav)}>
+      <IconButton onClick={() => handleFav(fav)}>
         <Badge>
           {fav ? (
             <FavoriteIcon
@@ -30,7 +45,7 @@ export const ActionButtons = () => {
         </Badge>
       </IconButton>
       <IconButton>
-        <ChatBubbleOutlineIcon />
+        <ChatBubbleOutlineIcon sx={{ color: "black" }} />
       </IconButton>
       <IconButton>
         <ShareIcon />
