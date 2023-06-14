@@ -11,6 +11,7 @@ import { postReducer } from "../../Reducer/PostReducer/PostReducer";
 export const PostContext = createContext();
 export const PostProvider = ({ children }) => {
   const [postStates, postDispatch] = useReducer(postReducer, initialState);
+  const token = localStorage.getItem("token");
 
   const getData = async () => {
     try {
@@ -23,12 +24,48 @@ export const PostProvider = ({ children }) => {
     }
   };
 
+  const updateUnlikePost = async (postId) => {
+    try {
+      const response = await fetch(`api/posts/dislike/${postId}`, {
+        method: "POST",
+        headers: {
+          authorization: token,
+        },
+      });
+      const data = await response.json();
+      console.log("🚀 ~ file: PostContext.jsx:36 ~ unlikePost ~ data:", data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const updateLikes = async (postId) => {
+    console.log("🚀 ~ file: PostContext.jsx:27 ~ getLikes ~ postId:", postId);
+    try {
+      const response = await fetch(`api/posts/like/${postId}`, {
+        method: "POST",
+        headers: {
+          authorization: token,
+        },
+      });
+      console.log(
+        "🚀 ~ file: PostContext.jsx:31 ~ getLikes ~ response:",
+        response
+      );
+      const data = await response.json();
+      console.log("🚀 ~ file: PostContext.jsx:32 ~ getLikes ~ data:", data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
     getData();
   }, []);
 
   return (
-    <PostContext.Provider value={{ postStates, getData }}>
+    <PostContext.Provider
+      value={{ postStates, getData, updateLikes, updateUnlikePost }}
+    >
       {children}
     </PostContext.Provider>
   );

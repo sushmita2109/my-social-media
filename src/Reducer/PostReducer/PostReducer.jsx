@@ -9,6 +9,7 @@ export const postReducer = (state, action) => {
         allPosts: action.payload,
       };
     }
+
     default:
       return state;
   }
