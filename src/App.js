@@ -4,6 +4,7 @@ import { UserFeed } from "./Pages/UserFeed/UserFeed";
 import { Login } from "./Pages/Login/Login";
 import { RequireAuth } from "./components/RequireAuth/RequireAuth";
 import { IndividualPosts } from "./components/IndividualPosts/IndividualPosts";
+import { Bookmark } from "./components/Bookmark/Bookmark";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/:postId" element={<IndividualPosts />} />
+        <Route path="/bookmark" element={<Bookmark />} />
         <Route
           path="/"
           element={

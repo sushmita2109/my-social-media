@@ -100,6 +100,7 @@ export const PostProvider = ({ children }) => {
         updateUnlikePost,
         addBookMark,
         removeBookMark,
+        postDispatch,
       }}
     >
       {children}

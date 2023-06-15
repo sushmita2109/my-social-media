@@ -3,9 +3,9 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import ShareIcon from "@mui/icons-material/Share";
-import TurnedInNotIcon from "@mui/icons-material/TurnedInNot";
 import Badge from "@mui/material/Badge";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
+import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import "./ActionButtons.css";
 import { useState } from "react";
 import { usePost } from "../../context/PostContext/PostContext";
@@ -65,7 +65,7 @@ export const ActionButtons = ({ post }) => {
         <ShareIcon />
       </IconButton>
       <IconButton onClick={() => handleSave(saved)}>
-        {saved ? <TurnedInNotIcon /> : <BookmarkIcon />}
+        {saved ? <BookmarkIcon /> : <BookmarkBorderIcon />}
       </IconButton>
     </div>
   );
