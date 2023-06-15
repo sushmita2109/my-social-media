@@ -9,7 +9,7 @@ import "./ActionButtons.css";
 import { useState } from "react";
 import { usePost } from "../../context/PostContext/PostContext";
 
-export const ActionButtons = ({ postId }) => {
+export const ActionButtons = ({ post }) => {
   const { updateLikes, updateUnlikePost } = usePost();
   const [fav, setFav] = useState(false);
 
@@ -17,18 +17,18 @@ export const ActionButtons = ({ postId }) => {
     if (like === false) {
       setFav(true);
 
-      updateLikes(postId);
+      updateLikes(post);
     }
     if (like === true) {
       setFav(false);
 
-      updateUnlikePost(postId);
+      updateUnlikePost(post);
     }
   };
   return (
     <div className="buttons-container">
       <IconButton onClick={() => handleFav(fav)}>
-        <Badge>
+        <Badge badgeContent={post.likes.likeCount} sx={{ color: "red" }}>
           {fav ? (
             <FavoriteIcon
               sx={{
