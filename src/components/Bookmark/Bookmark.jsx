@@ -6,7 +6,6 @@ const token = localStorage.getItem("token");
 
 export const Bookmark = () => {
   const { postDispatch, postStates } = usePost();
-  console.log("🚀 ~ file: Bookmark.jsx:7 ~ Bookmark ~ postStates:", postStates);
 
   const getBookmarks = async () => {
     try {
@@ -16,15 +15,17 @@ export const Bookmark = () => {
         },
       });
       const data = await response.json();
-      console.log("🚀 ~ file: Bookmark.jsx:19 ~ getBookmarks ~ data:", data);
+
       postDispatch({ type: "GET_BOOKMARK", payload: data });
     } catch (e) {
       console.log(e);
     }
   };
+
   useEffect(() => {
     getBookmarks();
   }, []);
+
   return (
     <div className="bookmark-container">
       <h4>Bookmark</h4>
