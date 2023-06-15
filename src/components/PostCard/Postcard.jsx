@@ -3,9 +3,11 @@ import Card from "@mui/material/Card";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import "./PostCard.css";
 import { ActionButtons } from "../ActionButtons/ActionButtons";
+import { useNavigate } from "react-router-dom";
 
 export const PostCard = () => {
   const { postStates } = usePost();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -21,9 +23,10 @@ export const PostCard = () => {
                 <p> {post.updatedAt.toString().split("T")[0]}</p>
               </div>
             </div>
-
-            <p className="post-content">{post.content}</p>
-            <ActionButtons postId={post._id} />
+            <div onClick={() => navigate(`/${post._id}`)}>
+              <p className="post-content">{post.content}</p>
+            </div>
+            <ActionButtons post={post} />
           </Card>
         ))}
     </>

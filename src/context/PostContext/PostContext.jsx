@@ -24,26 +24,23 @@ export const PostProvider = ({ children }) => {
     }
   };
 
-  const updateUnlikePost = async (postId) => {
+  const updateUnlikePost = async (post) => {
     try {
-      const response = await fetch(`api/posts/dislike/${postId}`, {
+      const response = await fetch(`api/posts/dislike/${post._id}`, {
         method: "POST",
         headers: {
           authorization: token,
         },
       });
       const data = await response.json();
-      console.log(
-        "🚀 ~ file: PostContext.jsx:36 ~ updateUnlikePost ~ data:",
-        data
-      );
+      postDispatch({ type: "GET_POSTS", payload: data });
     } catch (e) {
       console.log(e);
     }
   };
-  const updateLikes = async (postId) => {
+  const updateLikes = async (post) => {
     try {
-      const response = await fetch(`api/posts/like/${postId}`, {
+      const response = await fetch(`api/posts/like/${post._id}`, {
         method: "POST",
         headers: {
           authorization: token,
@@ -51,7 +48,7 @@ export const PostProvider = ({ children }) => {
       });
 
       const data = await response.json();
-      console.log("🚀 ~ file: PostContext.jsx:32 ~ getLikes ~ data:", data);
+      postDispatch({ type: "GET_POSTS", payload: data });
     } catch (e) {
       console.log(e);
     }
@@ -63,7 +60,12 @@ export const PostProvider = ({ children }) => {
 
   return (
     <PostContext.Provider
-      value={{ postStates, getData, updateLikes, updateUnlikePost }}
+      value={{
+        postStates,
+        getData,
+        updateLikes,
+        updateUnlikePost,
+      }}
     >
       {children}
     </PostContext.Provider>
