@@ -5,13 +5,16 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import ShareIcon from "@mui/icons-material/Share";
 import TurnedInNotIcon from "@mui/icons-material/TurnedInNot";
 import Badge from "@mui/material/Badge";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
 import "./ActionButtons.css";
 import { useState } from "react";
 import { usePost } from "../../context/PostContext/PostContext";
 
 export const ActionButtons = ({ post }) => {
-  const { updateLikes, updateUnlikePost } = usePost();
+  const { updateLikes, updateUnlikePost, addBookMark, removeBookMark } =
+    usePost();
   const [fav, setFav] = useState(false);
+  const [saved, setSaved] = useState(false);
 
   const handleFav = (like) => {
     if (like === false) {
@@ -23,6 +26,17 @@ export const ActionButtons = ({ post }) => {
       setFav(false);
 
       updateUnlikePost(post);
+    }
+  };
+
+  const handleSave = (save) => {
+    if (save === false) {
+      setFav(true);
+      addBookMark(post);
+    }
+    if (save === true) {
+      setFav(false);
+      removeBookMark(post);
     }
   };
   return (
@@ -50,8 +64,8 @@ export const ActionButtons = ({ post }) => {
       <IconButton>
         <ShareIcon />
       </IconButton>
-      <IconButton>
-        <TurnedInNotIcon />
+      <IconButton onClick={() => handleSave(saved)}>
+        {saved ? <TurnedInNotIcon /> : <BookmarkIcon />}
       </IconButton>
     </div>
   );
