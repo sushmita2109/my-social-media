@@ -153,10 +153,6 @@ export const bookmarkPostHandler = function (schema, request) {
       { _id: user._id },
       { ...user, updatedAt: formatDate() }
     );
-    console.log(
-      "🚀 ~ file: UserController.js:152 ~ bookmarkPostHandler ~ user on update:",
-      user
-    );
 
     return new Response(200, {}, { bookmarks: user.bookmarks });
   } catch (error) {

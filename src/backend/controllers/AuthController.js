@@ -66,17 +66,10 @@ export const signupHandler = function (schema, request) {
 
 export const loginHandler = function (schema, request) {
   const { username, password } = JSON.parse(request.requestBody);
-  console.log(
-    "🚀 ~ file: AuthController.js:69 ~ loginHandler ~ username, password :",
-    username,
-    password
-  );
+
   try {
     const foundUser = schema.users.findBy({ username: username });
-    console.log(
-      "🚀 ~ file: AuthController.js:76 ~ loginHandler ~ foundUser:",
-      foundUser
-    );
+
     if (!foundUser) {
       return new Response(
         404,
@@ -88,26 +81,13 @@ export const loginHandler = function (schema, request) {
         }
       );
     }
-    console.log(
-      "🚀 ~ file: AuthController.js:93 ~ loginHandler ~ foundUser.attrs.password:",
-      foundUser.attrs.password === password
-    );
 
     //attrs.password
-    console.log(
-      "🚀 ~ file: AuthController.js:110 ~ loginHandler ~ process.env.REACT_APP_JWT_SECRET:",
-      process.env.REACT_APP_JWT_SECRET
-    );
 
     if (password === foundUser.attrs.password) {
       const encodedToken = sign(
         { _id: foundUser._id, username },
         process.env.REACT_APP_JWT_SECRET
-      );
-      console.log(
-        "🚀 ~ file: AuthController.js:97 ~ loginHandler ~ foundUser, encodedToken:",
-        foundUser,
-        encodedToken
       );
 
       return new Response(200, {}, { foundUser, encodedToken });

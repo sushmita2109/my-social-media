@@ -31,11 +31,11 @@ export const ActionButtons = ({ post }) => {
 
   const handleSave = (save) => {
     if (save === false) {
-      setFav(true);
+      setSaved(true);
       addBookMark(post);
     }
     if (save === true) {
-      setFav(false);
+      setSaved(false);
       removeBookMark(post);
     }
   };
@@ -65,7 +65,11 @@ export const ActionButtons = ({ post }) => {
         <ShareIcon />
       </IconButton>
       <IconButton onClick={() => handleSave(saved)}>
-        {saved ? <BookmarkIcon /> : <BookmarkBorderIcon />}
+        {saved ? (
+          <BookmarkIcon sx={{ color: "blueviolet" }} />
+        ) : (
+          <BookmarkBorderIcon sx={{ color: "blueviolet" }} />
+        )}
       </IconButton>
     </div>
   );

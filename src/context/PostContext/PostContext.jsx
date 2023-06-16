@@ -33,7 +33,6 @@ export const PostProvider = ({ children }) => {
         },
       });
       const data = await response.json();
-      console.log("🚀 ~ file: PostContext.jsx:33 ~ addBookMark ~ data:", data);
     } catch (e) {
       console.log(e);
     }
@@ -48,10 +47,6 @@ export const PostProvider = ({ children }) => {
         },
       });
       const data = await response.json();
-      console.log(
-        "🚀 ~ file: PostContext.jsx:40 ~ removeBookMark ~ data:",
-        data
-      );
     } catch (e) {
       console.log(e);
     }
