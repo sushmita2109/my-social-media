@@ -1,6 +1,7 @@
 export const initialState = {
   allPosts: [],
   bookMarks: [],
+  users: [],
 };
 export const postReducer = (state, action) => {
   switch (action.type) {
@@ -14,6 +15,12 @@ export const postReducer = (state, action) => {
       return {
         ...state,
         bookMarks: action.payload,
+      };
+    }
+    case "USERS_DETAILS": {
+      return {
+        ...state,
+        users: action.payload,
       };
     }
 

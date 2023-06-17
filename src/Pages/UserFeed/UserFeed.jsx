@@ -2,9 +2,9 @@ import { PostCard } from "../../components/PostCard/Postcard";
 import { useAuth } from "../../context/AuthContext/AuthContext";
 import "./UserFeed.css";
 import { SideBar } from "../../components/SideBar/SideBar";
-import { IconButton } from "@mui/material";
-import BookmarksIcon from "@mui/icons-material/Bookmarks";
+
 import { useNavigate } from "react-router-dom";
+import { FollowerFriend } from "../../components/FollowerFriend/FollowerFriend";
 
 export const UserFeed = () => {
   const { loggedIn } = useAuth();
@@ -15,14 +15,12 @@ export const UserFeed = () => {
       <SideBar />
       {loggedIn && (
         <div>
-          <IconButton onClick={() => navigate("/bookmark")}>
-            <BookmarksIcon />
-          </IconButton>
           <div className="postCard-container">
             <PostCard />
           </div>
         </div>
       )}
+      <FollowerFriend />
     </div>
   );
 };
