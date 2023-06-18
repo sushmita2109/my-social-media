@@ -10,16 +10,32 @@ import "./FollowerFriend.css";
 export const FollowerFriend = () => {
   const { postDispatch, postStates } = usePost();
   const { loggedIn } = useAuth();
+  const token = localStorage.getItem("token");
+
+  const followUser = async (user) => {
+    try {
+      const response = await fetch(`/api/users/follow/${user._id}/`, {
+        method: "POST",
+        headers: {
+          authorization: token,
+        },
+      });
+      const data = await response.json();
+      console.log(
+        "🚀 ~ file: FollowerFriend.jsx:24 ~ followUser ~ data:",
+        data
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const getUsers = async () => {
     try {
       if (loggedIn) {
         const response = await fetch("/api/users");
         const data = await response.json();
-        console.log(
-          "🚀 ~ file: FollowerFriend.jsx:17 ~ getUsers ~ data:",
-          data
-        );
+
         postDispatch({ type: "USERS_DETAILS", payload: data.users });
       }
     } catch (e) {
@@ -43,7 +59,7 @@ export const FollowerFriend = () => {
                 flexDirection: "row",
                 flexWrap: "wrap",
                 justifyContent: "space-between",
-                gap: "8px",
+                gap: "12px",
                 padding: "5px",
               }}
             >
@@ -55,6 +71,7 @@ export const FollowerFriend = () => {
                 <p>@{user.username}</p>
               </div>
               <Button
+                onClick={() => console.log("hello")}
                 sx={{
                   backgroundColor: "#dabdff",
                   pointerEvents: "none",
