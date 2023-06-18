@@ -1,0 +1,11 @@
+.username-cont {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.username {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
