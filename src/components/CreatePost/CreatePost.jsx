@@ -5,10 +5,12 @@ import Stack from "@mui/material/Stack";
 import ImageIcon from "@mui/icons-material/Image";
 import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 import { useEffect, useState } from "react";
+import { usePost } from "../../context/PostContext/PostContext";
 
 export const CreatePost = () => {
   const [newPost, setNewPost] = useState("");
   const token = localStorage.getItem("token");
+  const { postDispatch } = usePost();
 
   const addPost = async () => {
     try {
@@ -17,18 +19,15 @@ export const CreatePost = () => {
         headers: {
           authorization: token,
         },
-        body: JSON.stringify(newPost),
+        body: JSON.stringify({ postData: newPost }),
       });
       const data = await response.json();
-      console.log("🚀 ~ file: CreatePost.jsx:22 ~ addPost ~ data:", data);
+      postDispatch({ type: "GET_POSTS", payload: data });
+      setNewPost(" ");
     } catch (e) {
       console.log(e);
     }
   };
-
-  useEffect(() => {
-    addPost();
-  }, []);
 
   return (
     <div>
@@ -38,6 +37,7 @@ export const CreatePost = () => {
             id="outlined-multiline-static"
             multiline
             rows={4}
+            value={newPost}
             placeholder="Enter the Post"
             onChange={(e) => setNewPost(e.target.value)}
           />
