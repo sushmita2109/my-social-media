@@ -6,7 +6,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import ExploreIcon from "@mui/icons-material/Explore";
 import { useNavigate } from "react-router-dom";
-import { Modal, Box, Button, Typography } from "@mui/material";
+import { Modal, Box, Button } from "@mui/material";
 import { useState } from "react";
 import { CreatePost } from "../CreatePost/CreatePost";
 
@@ -26,6 +26,28 @@ export const SideBar = (props) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const buttonDetails = [
+    {
+      name: "Home",
+      icon: <HomeIcon />,
+      routePath: "/",
+    },
+    {
+      name: "Explore",
+      icon: <ExploreIcon />,
+      routePath: "/explore",
+    },
+    {
+      name: "Bookmark",
+      icon: <BookmarksIcon />,
+      routePath: "/bookmark",
+    },
+    {
+      name: "Logout",
+      icon: <LogoutIcon />,
+      routePath: "/login",
+    },
+  ];
 
   return (
     <>
@@ -38,22 +60,15 @@ export const SideBar = (props) => {
           padding: "5px",
         }}
       >
-        <IconButton onClick={() => navigate("/")}>
-          <HomeIcon />
-          Home
-        </IconButton>
-        <IconButton>
-          <ExploreIcon />
-          Explore
-        </IconButton>
-        <IconButton onClick={() => navigate("/bookmark")}>
-          <BookmarksIcon />
-          Bookmark
-        </IconButton>
-        <IconButton>
-          <LogoutIcon />
-          Logout
-        </IconButton>
+        {buttonDetails.map((item) => (
+          <Button
+            onClick={() => navigate(item.routePath)}
+            startIcon={item.icon}
+          >
+            {item.name}
+          </Button>
+        ))}
+
         <IconButton
           sx={{
             border: "1px solid",

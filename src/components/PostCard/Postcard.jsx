@@ -6,7 +6,7 @@ import { ActionButtons } from "../ActionButtons/ActionButtons";
 import { useNavigate } from "react-router-dom";
 import { CreatePost } from "../CreatePost/CreatePost";
 
-const ascendingOrder = (a, b) => b.updatedAt - a.updatedAt;
+const ascendingOrder = (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt);
 
 export const PostCard = () => {
   const { postStates } = usePost();
