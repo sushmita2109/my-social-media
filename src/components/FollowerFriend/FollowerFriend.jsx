@@ -71,10 +71,11 @@ export const FollowerFriend = () => {
                 <p>@{user.username}</p>
               </div>
               <Button
+                variant="contained"
                 onClick={() => console.log("hello")}
                 sx={{
-                  backgroundColor: "#dabdff",
-                  pointerEvents: "none",
+                  //   backgroundColor: "#dabdff",
+                  //   pointerEvents: "none",
                   height: "45px",
                   marginTop: "5px",
                 }}
