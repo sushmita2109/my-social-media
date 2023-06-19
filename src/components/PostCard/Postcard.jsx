@@ -4,6 +4,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import "./PostCard.css";
 import { ActionButtons } from "../ActionButtons/ActionButtons";
 import { useNavigate } from "react-router-dom";
+import { CreatePost } from "../CreatePost/CreatePost";
 
 export const PostCard = () => {
   const { postStates } = usePost();
@@ -12,7 +13,8 @@ export const PostCard = () => {
   return (
     <>
       <div>
-        <h1>Card</h1>
+        <CreatePost />
+        <h5>Latest Post</h5>
         {postStates.allPosts.posts.length > 0 &&
           postStates?.allPosts.posts.map((post) => (
             <Card key={post._id} className="post-container">
