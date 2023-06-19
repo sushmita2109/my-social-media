@@ -4,10 +4,10 @@ import FormControl from "@mui/material/FormControl";
 import Stack from "@mui/material/Stack";
 import ImageIcon from "@mui/icons-material/Image";
 import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { usePost } from "../../context/PostContext/PostContext";
 
-export const CreatePost = () => {
+export const CreatePost = ({ handleClose }) => {
   const [newPost, setNewPost] = useState("");
   const token = localStorage.getItem("token");
   const { postDispatch } = usePost();
@@ -26,6 +26,9 @@ export const CreatePost = () => {
       setNewPost(" ");
     } catch (e) {
       console.log(e);
+    }
+    if (handleClose) {
+      handleClose();
     }
   };
 

@@ -6,8 +6,14 @@ import { ActionButtons } from "../ActionButtons/ActionButtons";
 import { useNavigate } from "react-router-dom";
 import { CreatePost } from "../CreatePost/CreatePost";
 
+const ascendingOrder = (a, b) => b.updatedAt - a.updatedAt;
+
 export const PostCard = () => {
   const { postStates } = usePost();
+  console.log(
+    "🚀 ~ file: Postcard.jsx:13 ~ PostCard ~ postStates:",
+    postStates
+  );
   const navigate = useNavigate();
 
   return (
@@ -16,7 +22,7 @@ export const PostCard = () => {
         <CreatePost />
         <h5>Latest Post</h5>
         {postStates.allPosts.posts.length > 0 &&
-          postStates?.allPosts.posts.map((post) => (
+          postStates?.allPosts.posts.sort(ascendingOrder).map((post) => (
             <Card key={post._id} className="post-container">
               <div>
                 <AccountCircleIcon></AccountCircleIcon>
