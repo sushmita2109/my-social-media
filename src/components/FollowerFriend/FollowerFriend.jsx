@@ -72,7 +72,7 @@ export const FollowerFriend = () => {
               </div>
               <Button
                 variant="contained"
-                onClick={() => console.log("hello")}
+                onClick={() => followUser(user)}
                 sx={{
                   //   backgroundColor: "#dabdff",
                   //   pointerEvents: "none",

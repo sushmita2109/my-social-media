@@ -1,10 +1,4 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useReducer,
-  useState,
-} from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 import { initialState } from "../../Reducer/PostReducer/PostReducer";
 import { postReducer } from "../../Reducer/PostReducer/PostReducer";
 
@@ -21,6 +15,22 @@ export const PostProvider = ({ children }) => {
       postDispatch({ type: "GET_POSTS", payload: data });
     } catch (e) {
       console.log(e);
+    }
+  };
+
+  const getDeletedData = async (postId) => {
+    try {
+      const response = await fetch(`/api/posts/${postId}`, {
+        method: "DELETE",
+        headers: {
+          authorization: token,
+        },
+        body: JSON.stringify(postId),
+      });
+      const data = await response.json();
+      postDispatch({ type: "DELETED_DATA", payload: data });
+    } catch (e) {
+      console.log(e.message);
     }
   };
 
@@ -96,6 +106,7 @@ export const PostProvider = ({ children }) => {
         addBookMark,
         removeBookMark,
         postDispatch,
+        getDeletedData,
       }}
     >
       {children}

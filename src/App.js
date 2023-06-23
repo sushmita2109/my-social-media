@@ -6,7 +6,7 @@ import { RequireAuth } from "./components/RequireAuth/RequireAuth";
 import { IndividualPosts } from "./components/IndividualPosts/IndividualPosts";
 import { Bookmark } from "./components/Bookmark/Bookmark";
 import { NavBar } from "./components/Navbar/NavBar";
-import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
 import { useState } from "react";

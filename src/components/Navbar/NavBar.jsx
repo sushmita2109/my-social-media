@@ -2,8 +2,6 @@ import CakeIcon from "@mui/icons-material/Cake";
 import IconButton from "@mui/material/IconButton";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
-import { useState } from "react";
-import { usePost } from "../../context/PostContext/PostContext";
 import { TextField } from "@mui/material";
 
 export const NavBar = ({ islight, setIsLight }) => {

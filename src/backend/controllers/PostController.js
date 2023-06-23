@@ -255,8 +255,10 @@ export const dislikePostHandler = function (schema, request) {
  * */
 export const deletePostHandler = function (schema, request) {
   const user = requiresAuth.call(this, request);
+
   try {
-    if (!user) {
+    if (!user.username) {
+      console.log("ready to throw exception");
       return new Response(
         404,
         {},
@@ -268,7 +270,9 @@ export const deletePostHandler = function (schema, request) {
       );
     }
     const postId = request.params.postId;
+
     let post = schema.posts.findBy({ _id: postId }).attrs;
+
     if (post.username !== user.username) {
       return new Response(
         400,
