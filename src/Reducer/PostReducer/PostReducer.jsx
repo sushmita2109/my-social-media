@@ -23,6 +23,12 @@ export const postReducer = (state, action) => {
         users: action.payload,
       };
     }
+    case "DELETED_DATA": {
+      return {
+        ...state,
+        allPosts: action.payload,
+      };
+    }
 
     default:
       return state;

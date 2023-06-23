@@ -60,8 +60,9 @@ export const SideBar = (props) => {
           padding: "5px",
         }}
       >
-        {buttonDetails.map((item) => (
+        {buttonDetails.map((item, idx) => (
           <Button
+            key={idx}
             onClick={() => navigate(item.routePath)}
             startIcon={item.icon}
           >

@@ -18,6 +18,22 @@ export const PostProvider = ({ children }) => {
     }
   };
 
+  const getDeletedData = async (postId) => {
+    try {
+      const response = await fetch(`/api/posts/${postId}`, {
+        method: "DELETE",
+        headers: {
+          authorization: token,
+        },
+        body: JSON.stringify(postId),
+      });
+      const data = await response.json();
+      postDispatch({ type: "DELETED_DATA", payload: data });
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+
   const addBookMark = async (post) => {
     try {
       const response = await fetch(`/api/users/bookmark/${post._id}/`, {
@@ -90,6 +106,7 @@ export const PostProvider = ({ children }) => {
         addBookMark,
         removeBookMark,
         postDispatch,
+        getDeletedData,
       }}
     >
       {children}
