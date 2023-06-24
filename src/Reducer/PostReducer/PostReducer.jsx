@@ -29,6 +29,12 @@ export const postReducer = (state, action) => {
         allPosts: action.payload,
       };
     }
+    case "EDIT_POST": {
+      return {
+        ...state,
+        allPosts: action.payload,
+      };
+    }
 
     default:
       return state;

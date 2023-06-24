@@ -1,11 +1,15 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 import { initialState } from "../../Reducer/PostReducer/PostReducer";
 import { postReducer } from "../../Reducer/PostReducer/PostReducer";
+import axios from "axios";
 
 export const PostContext = createContext();
 export const PostProvider = ({ children }) => {
   const [postStates, postDispatch] = useReducer(postReducer, initialState);
   const token = localStorage.getItem("token");
+  const headers = {
+    authorization: token,
+  };
 
   const getData = async () => {
     try {
@@ -31,6 +35,22 @@ export const PostProvider = ({ children }) => {
       postDispatch({ type: "DELETED_DATA", payload: data });
     } catch (e) {
       console.log(e.message);
+    }
+  };
+
+  const getEditPost = async (postId, content) => {
+    try {
+      const response = await fetch(`/api/posts/edit/${postId}`, {
+        method: "POST",
+        headers: {
+          authorization: token,
+        },
+        body: JSON.stringify({ postData: { content: content } }),
+      });
+      const data = await response.json();
+      postDispatch({ type: "EDIT_POST", payload: data });
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -107,6 +127,7 @@ export const PostProvider = ({ children }) => {
         removeBookMark,
         postDispatch,
         getDeletedData,
+        getEditPost,
       }}
     >
       {children}

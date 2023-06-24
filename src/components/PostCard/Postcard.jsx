@@ -10,7 +10,7 @@ import { CreatePost } from "../CreatePost/CreatePost";
 const ascendingOrder = (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt);
 
 export const PostCard = () => {
-  const { postStates, getDeletedData } = usePost();
+  const { postStates, getDeletedData, getEditPost } = usePost();
 
   const navigate = useNavigate();
 
@@ -36,6 +36,7 @@ export const PostCard = () => {
                   <ContextualMenuBar
                     post={post}
                     getDeletedData={getDeletedData}
+                    getEditPost={getEditPost}
                   />
                 </div>
                 <div className="username-container">
