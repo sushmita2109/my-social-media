@@ -10,6 +10,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
 import { useState } from "react";
+import { Home } from "./Pages/Home/Home";
+import { Explore } from "./Pages/Explore/Explore";
 
 function App() {
   const [islight, setIsLight] = useState(true);
@@ -29,13 +31,14 @@ function App() {
         <CssBaseline />
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/explore" element={<Explore />} />
           <Route path="/:postId" element={<IndividualPosts />} />
           <Route path="/bookmark" element={<Bookmark />} />
           <Route
             path="/"
             element={
               <RequireAuth>
-                <UserFeed />
+                <Home />
               </RequireAuth>
             }
           />

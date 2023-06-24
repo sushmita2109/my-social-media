@@ -6,12 +6,13 @@ import "./PostCard.css";
 import { ActionButtons } from "../ActionButtons/ActionButtons";
 import { useNavigate } from "react-router-dom";
 import { CreatePost } from "../CreatePost/CreatePost";
+import { useAuth } from "../../context/AuthContext/AuthContext";
 
 const ascendingOrder = (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt);
 
 export const PostCard = () => {
   const { postStates, getDeletedData, getEditPost } = usePost();
-
+  const { authState } = useAuth();
   const navigate = useNavigate();
 
   return (

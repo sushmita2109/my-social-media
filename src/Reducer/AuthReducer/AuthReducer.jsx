@@ -7,16 +7,10 @@ export const initialState = {
 
 export const authReducer = (action, state) => {
   switch (action.type) {
-    case "ADD_USERNAME": {
+    case "USER_DETAIL": {
       return {
         ...state,
-        username: action.payload,
-      };
-    }
-    case "ADD_PASSWORD": {
-      return {
-        ...state,
-        password: action.payload,
+        user: action.payload,
       };
     }
     default: {

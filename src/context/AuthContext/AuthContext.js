@@ -11,6 +11,7 @@ export const AuthProvider = ({ children }) => {
   const [authState, authDispatch] = useReducer(authReducer, initialState);
   const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
+  const userDetail = localStorage.getItem("user");
 
   const handleLogin = async (user, pass, location) => {
     try {
@@ -23,7 +24,7 @@ export const AuthProvider = ({ children }) => {
 
       localStorage.setItem("token", data.encodedToken);
       localStorage.setItem("user", JSON.stringify(data.foundUser));
-
+      authDispatch({ type: "USER_DETAIL", payload: userDetail });
       setLoggedIn(true);
       navigate(location);
     } catch (e) {
@@ -35,8 +36,7 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         handleLogin,
-        password: authState.password,
-        username: authState.username,
+        authState,
         authDispatch,
         loggedIn,
       }}
