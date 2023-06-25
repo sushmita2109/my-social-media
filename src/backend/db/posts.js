@@ -59,4 +59,17 @@ export const posts = [
     createdAt: formatDate(),
     updatedAt: formatDate(),
   },
+  {
+    _id: uuid(),
+    content: "Good Moring People",
+    likes: {
+      likeCount: 0,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    username: "adarshbalika",
+    firstName: "Adarshbalika",
+    createdAt: formatDate(),
+    updatedAt: formatDate(),
+  },
 ];

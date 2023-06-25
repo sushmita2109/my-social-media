@@ -1,4 +1,4 @@
-import { Button, Card } from "@mui/material";
+import { Box, Button, Card } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
 import Stack from "@mui/material/Stack";
@@ -33,36 +33,35 @@ export const CreatePost = ({ handleClose }) => {
   };
 
   return (
-    <div>
-      <Card>
-        <FormControl sx={{ m: 1, width: "55ch" }}>
-          <TextField
-            id="outlined-multiline-static"
-            multiline
-            rows={4}
-            value={newPost}
-            placeholder="Enter the Post"
-            onChange={(e) => setNewPost(e.target.value)}
-          />
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              alignContent: "center",
-              justifyContent: "space-between",
-            }}
+    <Card>
+      <FormControl sx={{ m: 1, width: "55ch" }}>
+        <TextField
+          id="outlined-multiline-static"
+          multiline
+          rows={4}
+          value={newPost}
+          placeholder="Enter the Post"
+          onChange={(e) => setNewPost(e.target.value)}
+        />
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            alignContent: "center",
+            justifyContent: "space-between",
+            marginTop: 1,
+          }}
+        >
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            spacing={{ xs: 1, sm: 2, md: 4 }}
           >
-            <Stack
-              direction={{ xs: "column", sm: "row" }}
-              spacing={{ xs: 1, sm: 2, md: 4 }}
-            >
-              <ImageIcon />
-              <InsertEmoticonIcon />
-            </Stack>
-            <Button onClick={() => addPost()}>Post</Button>
-          </div>
-        </FormControl>
-      </Card>
-    </div>
+            <ImageIcon />
+            <InsertEmoticonIcon />
+          </Stack>
+          <Button onClick={() => addPost()}>Post</Button>
+        </Box>
+      </FormControl>
+    </Card>
   );
 };

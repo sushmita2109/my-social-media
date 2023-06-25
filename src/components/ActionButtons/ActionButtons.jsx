@@ -5,6 +5,7 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import ShareIcon from "@mui/icons-material/Share";
 import Badge from "@mui/material/Badge";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
+import { Box, Stack } from "@mui/material";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import "./ActionButtons.css";
 import { useState } from "react";
@@ -40,7 +41,7 @@ export const ActionButtons = ({ post }) => {
     }
   };
   return (
-    <div className="buttons-container">
+    <Stack direction={"row"} spacing={12}>
       <IconButton onClick={() => handleFav(fav)}>
         <Badge badgeContent={post.likes.likeCount} sx={{ color: "red" }}>
           {fav ? (
@@ -71,6 +72,6 @@ export const ActionButtons = ({ post }) => {
           <BookmarkBorderIcon sx={{ color: "blueviolet" }} />
         )}
       </IconButton>
-    </div>
+    </Stack>
   );
 };
