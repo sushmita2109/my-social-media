@@ -1,9 +1,6 @@
 import { UserFeed } from "../UserFeed/UserFeed";
+import { Box } from "@mui/material";
 
 export const Home = () => {
-  return (
-    <div>
-      <UserFeed />
-    </div>
-  );
+  return <UserFeed />;
 };
