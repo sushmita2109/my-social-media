@@ -2,6 +2,7 @@ export const initialState = {
   allPosts: [],
   bookMarks: [],
   users: [],
+  followingUser: [],
 };
 export const postReducer = (state, action) => {
   switch (action.type) {
@@ -35,7 +36,12 @@ export const postReducer = (state, action) => {
         allPosts: action.payload,
       };
     }
-
+    case "ADD_FOLLOWER": {
+      return {
+        ...state,
+        followingUser: action.payload,
+      };
+    }
     default:
       return state;
   }

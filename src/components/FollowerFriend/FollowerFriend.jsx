@@ -10,6 +10,7 @@ import "./FollowerFriend.css";
 export const FollowerFriend = () => {
   const { postDispatch, postStates } = usePost();
   const { loggedIn } = useAuth();
+  const { authDispatch, authStates } = useAuth();
   const token = localStorage.getItem("token");
 
   const followUser = async (user) => {
@@ -22,7 +23,7 @@ export const FollowerFriend = () => {
       });
       const data = await response.json();
       console.log(
-        "🚀 ~ file: FollowerFriend.jsx:24 ~ followUser ~ data:",
+        "🚀 ~ file: FollowerFriend.jsx:25 ~ followUser ~ data:",
         data
       );
     } catch (e) {
@@ -45,6 +46,7 @@ export const FollowerFriend = () => {
   useEffect(() => {
     getUsers();
   }, []);
+
   return (
     <div>
       <Card sx={{ width: "300px" }}>
