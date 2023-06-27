@@ -2,10 +2,12 @@ import Card from "@mui/material/Card";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { ActionButtons } from "../ActionButtons/ActionButtons";
 
+import ListItem from "@mui/material/ListItem";
+
 export const BookMarkCard = ({ bookMark }) => {
   return (
-    <div>
-      <Card className="post-container">
+    <ListItem>
+      <Card>
         <div>
           <AccountCircleIcon></AccountCircleIcon>
           {bookMark.firstName}
@@ -19,6 +21,6 @@ export const BookMarkCard = ({ bookMark }) => {
         </div>
         <ActionButtons post={bookMark} />
       </Card>
-    </div>
+    </ListItem>
   );
 };

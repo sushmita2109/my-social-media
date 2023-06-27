@@ -1,8 +1,6 @@
 export const initialState = {
   user: {},
-  email: "",
-  username: "",
-  password: "",
+  following: {},
 };
 
 export const authReducer = (action, state) => {
@@ -11,6 +9,12 @@ export const authReducer = (action, state) => {
       return {
         ...state,
         user: action.payload,
+      };
+    }
+    case "FOLLOWER_ADDED": {
+      return {
+        ...state,
+        following: action.payload,
       };
     }
     default: {

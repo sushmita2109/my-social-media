@@ -14,6 +14,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useState } from "react";
+import { DefaultLayout } from "../DefaultLayout/DefaultLayout";
 
 const updateDate = (postDate) => {
   return moment(postDate).format("MMMM  D, YYYY ");
@@ -98,28 +99,30 @@ export const Explore = () => {
   );
 
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <List>
-        {filteredData?.map((data) => (
-          <ListItem key={data._id}>
-            <Card sx={{ width: 500 }}>
-              <UserInfoHeader data={data} />
-              <CardContent onClick={() => navigate(`/${data._id}`)}>
-                <Typography>{data.content}</Typography>
-              </CardContent>
-              <CardActions>
-                <ActionButtons post={data} />
-              </CardActions>
-            </Card>
-          </ListItem>
-        ))}
-      </List>
-    </div>
+    <DefaultLayout>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <List>
+          {filteredData?.map((data) => (
+            <ListItem key={data._id}>
+              <Card sx={{ width: 500 }}>
+                <UserInfoHeader data={data} />
+                <CardContent onClick={() => navigate(`/${data._id}`)}>
+                  <Typography>{data.content}</Typography>
+                </CardContent>
+                <CardActions>
+                  <ActionButtons post={data} />
+                </CardActions>
+              </Card>
+            </ListItem>
+          ))}
+        </List>
+      </div>
+    </DefaultLayout>
   );
 };
