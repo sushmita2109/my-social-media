@@ -14,7 +14,7 @@ import moment from "moment";
 import { Box, Button } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FixedBottomNavigation from "../FixedBottomNavigation/FixedBottomNavigation";
 
 const ascendingOrder = (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt);
@@ -24,23 +24,29 @@ const updateDate = (postDate) => {
 };
 
 export const PostCard = () => {
-  const { postStates, getDeletedData, getEditPost } = usePost();
+  const { postStates, postDispatch, getDeletedData, getEditPost } = usePost();
   const userDetail = JSON.parse(localStorage.getItem("user"));
   const [anchorEl, setAnchorEl] = useState(null);
-
+  const navigate = useNavigate();
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const navigate = useNavigate();
 
-  const filteredData = postStates?.allPosts?.posts?.filter(
-    (post) => post.username === userDetail.username
-  );
-
+  const getData = () => {
+    const userfeedPosts = postStates?.allPosts?.posts?.filter(
+      (post) => post.username === userDetail.username
+    );
+    postDispatch({ type: "USER_FEEDS", payload: userfeedPosts });
+  };
+  useEffect(() => {
+    getData();
+  }, []);
+  console.log(postStates.userfeeds);
   return (
     <Box
       sx={{
@@ -80,8 +86,8 @@ export const PostCard = () => {
       </Box>
 
       <List>
-        {filteredData?.length > 0 &&
-          filteredData?.sort(ascendingOrder).map((post) => (
+        {postStates.userfeeds?.length > 0 &&
+          postStates.userfeeds?.sort(ascendingOrder).map((post) => (
             <ListItem key={post._id} sx={{ justifyContent: "center" }}>
               <Card
                 sx={{

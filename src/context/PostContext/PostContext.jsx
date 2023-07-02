@@ -2,11 +2,13 @@ import { createContext, useContext, useEffect, useReducer } from "react";
 import { initialState } from "../../Reducer/PostReducer/PostReducer";
 import { postReducer } from "../../Reducer/PostReducer/PostReducer";
 import axios from "axios";
+import { useAuth } from "../AuthContext/AuthContext";
 
 export const PostContext = createContext();
 export const PostProvider = ({ children }) => {
   const [postStates, postDispatch] = useReducer(postReducer, initialState);
   const token = localStorage.getItem("token");
+  const { authStates } = useAuth();
   const headers = {
     authorization: token,
   };
