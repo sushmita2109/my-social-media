@@ -10,7 +10,7 @@ import "./FollowerFriend.css";
 export const FollowerFriend = () => {
   const { postDispatch, postStates } = usePost();
   const { loggedIn } = useAuth();
-  const { authDispatch, authStates } = useAuth();
+  const userDetail = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("token");
 
   const followUser = async (user) => {
@@ -22,10 +22,16 @@ export const FollowerFriend = () => {
         },
       });
       const data = await response.json();
-      console.log(
-        "🚀 ~ file: FollowerFriend.jsx:25 ~ followUser ~ data:",
-        data
+
+      const filteredUsers = postStates?.followingUser?.filter(
+        (user) => user.username !== data.followUser.username
       );
+      const filterPost = postStates?.allPosts?.posts?.filter(
+        (post) => post.username === data.followUser.username
+      );
+
+      postDispatch({ type: "UPDATE_FOLLOWER_LIST", payload: filteredUsers });
+      postDispatch({ type: "ADD_FOLLOWER_FEED", payload: filterPost });
     } catch (e) {
       console.log(e);
     }
@@ -36,8 +42,11 @@ export const FollowerFriend = () => {
       if (loggedIn) {
         const response = await fetch("/api/users");
         const data = await response.json();
+        const filteredUsers = data?.users?.filter(
+          (user) => user.username !== userDetail.username
+        );
 
-        postDispatch({ type: "USERS_DETAILS", payload: data.users });
+        postDispatch({ type: "USERS_FOLLOWERS", payload: filteredUsers });
       }
     } catch (e) {
       console.log(e);
@@ -53,7 +62,7 @@ export const FollowerFriend = () => {
         <Typography variant="h6">Suggested Users</Typography>
 
         <div>
-          {postStates?.users?.map((user) => (
+          {postStates?.followingUser?.map((user) => (
             <Card
               key={user._id}
               style={{

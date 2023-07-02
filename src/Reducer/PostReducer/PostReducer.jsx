@@ -1,7 +1,7 @@
 export const initialState = {
   allPosts: [],
   bookMarks: [],
-  users: [],
+  userfeeds: [],
   followingUser: [],
 };
 export const postReducer = (state, action) => {
@@ -18,16 +18,17 @@ export const postReducer = (state, action) => {
         bookMarks: action.payload,
       };
     }
-    case "USERS_DETAILS": {
-      return {
-        ...state,
-        users: action.payload,
-      };
-    }
+
     case "DELETED_DATA": {
       return {
         ...state,
         allPosts: action.payload,
+      };
+    }
+    case "USER_FEEDS": {
+      return {
+        ...state,
+        userfeeds: action.payload,
       };
     }
     case "EDIT_POST": {
@@ -36,10 +37,23 @@ export const postReducer = (state, action) => {
         allPosts: action.payload,
       };
     }
-    case "ADD_FOLLOWER": {
+
+    case "USERS_FOLLOWERS": {
       return {
         ...state,
         followingUser: action.payload,
+      };
+    }
+    case "UPDATE_FOLLOWER_LIST": {
+      return {
+        ...state,
+        followingUser: action.payload,
+      };
+    }
+    case "ADD_FOLLOWER_FEED": {
+      return {
+        ...state,
+        userfeeds: [...state.userfeeds, ...action.payload],
       };
     }
     default:
