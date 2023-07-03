@@ -59,43 +59,47 @@ export const FollowerFriend = () => {
   return (
     <div>
       <Card sx={{ width: "300px" }}>
-        <Typography variant="h6">Suggested Users</Typography>
+        {postStates?.followingUser?.length > 0 && (
+          <div>
+            <Typography variant="h6">Suggested Users</Typography>
 
-        <div>
-          {postStates?.followingUser?.map((user) => (
-            <Card
-              key={user._id}
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                flexWrap: "wrap",
-                justifyContent: "space-between",
-                gap: "12px",
-                padding: "5px",
-              }}
-            >
-              <div className="username-cont">
-                <div className="username">
-                  <AccountCircleIcon></AccountCircleIcon>
-                  {user.firstName}
-                </div>
-                <p>@{user.username}</p>
-              </div>
-              <Button
-                variant="contained"
-                onClick={() => followUser(user)}
-                sx={{
-                  //   backgroundColor: "#dabdff",
-                  //   pointerEvents: "none",
-                  height: "45px",
-                  marginTop: "5px",
-                }}
-              >
-                Follow
-              </Button>
-            </Card>
-          ))}
-        </div>
+            <div>
+              {postStates?.followingUser?.map((user) => (
+                <Card
+                  key={user._id}
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    flexWrap: "wrap",
+                    justifyContent: "space-between",
+                    gap: "12px",
+                    padding: "5px",
+                  }}
+                >
+                  <div className="username-cont">
+                    <div className="username">
+                      <AccountCircleIcon></AccountCircleIcon>
+                      {user.firstName}
+                    </div>
+                    <p>@{user.username}</p>
+                  </div>
+                  <Button
+                    variant="contained"
+                    onClick={() => followUser(user)}
+                    sx={{
+                      //   backgroundColor: "#dabdff",
+                      //   pointerEvents: "none",
+                      height: "45px",
+                      marginTop: "5px",
+                    }}
+                  >
+                    Follow
+                  </Button>
+                </Card>
+              ))}
+            </div>
+          </div>
+        )}
       </Card>
     </div>
   );
