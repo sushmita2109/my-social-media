@@ -14,13 +14,15 @@ export const NavBar = ({ islight, setIsLight }) => {
       style={{
         display: "flex",
         flexDirection: "row",
-        alignContent: "center",
+        alignItems: "center",
+
         justifyContent: "space-between",
         padding: "8px",
         backgroundColor: "#dabdff",
         position: "sticky",
         top: 0,
         width: "100%",
+        zIndex: 4000,
       }}
     >
       <CakeIcon variant="large" sx={{ color: "white" }} />

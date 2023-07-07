@@ -3,7 +3,8 @@ import { createContext } from "react";
 import { initialState } from "../../Reducer/AuthReducer/AuthReducer";
 import { authReducer } from "../../Reducer/AuthReducer/AuthReducer";
 import { useNavigate } from "react-router-dom";
-import { usePost } from "../PostContext/PostContext";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const AuthContext = createContext();
 
@@ -11,9 +12,10 @@ export const AuthProvider = ({ children }) => {
   const [authState, authDispatch] = useReducer(authReducer, initialState);
   const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
+
   const userDetail = localStorage.getItem("user");
 
-  const handleLogin = async (user, pass, location) => {
+  const handleLogin = async (user, pass) => {
     try {
       const response = await fetch("/api/auth/login", {
         method: "POST",
@@ -26,10 +28,17 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("user", JSON.stringify(data.foundUser));
       authDispatch({ type: "USER_DETAIL", payload: userDetail });
       setLoggedIn(true);
-      navigate(location);
+      navigate("/home");
+      toast.success("Logged In Successfully");
     } catch (e) {
       console.log("🚀 ~ file: AuthContext.js:20 ~ handleLogin ~ e:", e);
     }
+  };
+
+  const handlelogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setLoggedIn(false);
   };
 
   return (
@@ -39,6 +48,7 @@ export const AuthProvider = ({ children }) => {
         authState,
         authDispatch,
         loggedIn,
+        handlelogout,
       }}
     >
       {children}

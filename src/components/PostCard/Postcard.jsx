@@ -6,7 +6,7 @@ import ListItem from "@mui/material/ListItem";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import "./PostCard.css";
 import { ActionButtons } from "../ActionButtons/ActionButtons";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { CreatePost } from "../CreatePost/CreatePost";
 import Typography from "@mui/material/Typography";
 import TuneIcon from "@mui/icons-material/Tune";
@@ -112,6 +112,7 @@ export const PostCard = () => {
                   >
                     <Box sx={{ display: "flex" }}>
                       <AccountCircleIcon
+                        onClick={() => navigate(`profile/${post.username}`)}
                         sx={{ fontSize: 50 }}
                       ></AccountCircleIcon>
                     </Box>
@@ -121,6 +122,7 @@ export const PostCard = () => {
                         @{post.username}
                       </Typography>
                     </Box>
+
                     <Box className="username-container">
                       <Typography variant="caption">
                         {" "}

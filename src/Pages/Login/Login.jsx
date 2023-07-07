@@ -4,7 +4,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -12,15 +12,15 @@ import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import "./Login.css";
 import { useAuth } from "../../context/AuthContext/AuthContext";
-import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [userName, setUserName] = useState("");
   const [userPassword, setPassword] = useState("");
-  const location = useLocation();
-
   const { handleLogin } = useAuth();
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -31,18 +31,17 @@ export const Login = () => {
   const loginGuest = (user, pass) => {
     setUserName(user);
     setPassword(pass);
-    handleLogin(user, pass, location?.state?.from?.pathname);
+    handleLogin(user, pass);
   };
+
   return (
     <Box
       sx={{
-        backgroundColor: "black",
-        margin: "0",
+        margin: "50px",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        height: "50vh",
       }}
     >
       <Card
@@ -50,11 +49,10 @@ export const Login = () => {
           display: "flex",
           flexWrap: "wrap",
           flexDirection: "column",
-          margin: "auto",
-          width: "85%",
+          margin: "20px",
+          width: "30%",
           alignItems: "center",
           justifyContent: "center",
-          gap: "5px",
         }}
       >
         <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
@@ -99,13 +97,7 @@ export const Login = () => {
           </FormControl>
           <Button
             variant="contained"
-            onClick={() =>
-              handleLogin(
-                userName,
-                userPassword,
-                location?.state?.from?.pathname
-              )
-            }
+            onClick={() => handleLogin(userName, userPassword)}
             sx={{ marginBottom: "3px" }}
           >
             Login

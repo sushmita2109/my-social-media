@@ -2,9 +2,7 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import RestoreIcon from "@mui/icons-material/Restore";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
+
 import BookmarksIcon from "@mui/icons-material/Bookmarks";
 import HomeIcon from "@mui/icons-material/Home";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -15,21 +13,28 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
 const buttonDetails = [
   {
+    id: 1,
     label: "Home",
     icon: <HomeIcon />,
     routePath: "/",
   },
   {
+    id: 2,
+
     label: "Explore",
     icon: <ExploreIcon />,
     routePath: "/explore",
   },
   {
+    id: 3,
+
     label: "Bookmark",
     icon: <BookmarksIcon />,
     routePath: "/bookmark",
   },
   {
+    id: 4,
+
     label: "Logout",
     icon: <LogoutIcon />,
     routePath: "/login",
@@ -52,6 +57,7 @@ export default function FixedBottomNavigation() {
       >
         {buttonDetails.map((button) => (
           <BottomNavigationAction
+            key={button.id}
             label={button.label}
             icon={button.icon}
             onClick={() => navigate(button.routePath)}
