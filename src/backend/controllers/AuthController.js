@@ -66,10 +66,8 @@ export const signupHandler = function (schema, request) {
 
 export const loginHandler = function (schema, request) {
   const { username, password } = JSON.parse(request.requestBody);
-
   try {
     const foundUser = schema.users.findBy({ username: username });
-
     if (!foundUser) {
       return new Response(
         404,
@@ -81,18 +79,14 @@ export const loginHandler = function (schema, request) {
         }
       );
     }
-
-    //attrs.password
-
-    if (password === foundUser.attrs.password) {
+    if (password === foundUser.password) {
       const encodedToken = sign(
         { _id: foundUser._id, username },
         process.env.REACT_APP_JWT_SECRET
       );
-
       return new Response(200, {}, { foundUser, encodedToken });
     }
-    /* return new Response(
+    return new Response(
       401,
       {},
       {
@@ -100,12 +94,8 @@ export const loginHandler = function (schema, request) {
           "The credentials you entered are invalid. Unauthorized access error.",
         ],
       }
-    ); */
-  } catch (error) {
-    console.log(
-      "🚀 ~ file: AuthController.js:120 ~ loginHandler ~ error:",
-      error
     );
+  } catch (error) {
     return new Response(
       500,
       {},

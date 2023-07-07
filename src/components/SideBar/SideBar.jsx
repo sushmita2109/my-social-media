@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { Modal, Box, Button } from "@mui/material";
 import { useState } from "react";
 import { CreatePost } from "../CreatePost/CreatePost";
+import { useAuth } from "../../context/AuthContext/AuthContext";
 
 const style = {
   position: "absolute",
@@ -26,11 +27,13 @@ export const SideBar = (props) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const { handlelogout } = useAuth();
+
   const buttonDetails = [
     {
       name: "Home",
       icon: <HomeIcon />,
-      routePath: "/",
+      routePath: "/home",
     },
     {
       name: "Explore",
@@ -63,7 +66,11 @@ export const SideBar = (props) => {
         {buttonDetails.map((item, idx) => (
           <Button
             key={idx}
-            onClick={() => navigate(item.routePath)}
+            onClick={() =>
+              item.routePath === "/login"
+                ? handlelogout
+                : navigate(item.routePath)
+            }
             startIcon={item.icon}
           >
             {item.name}

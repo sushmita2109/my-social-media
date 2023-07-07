@@ -56,9 +56,9 @@ export const editUserHandler = function (schema, request) {
       );
     }
     const { userData } = JSON.parse(request.requestBody);
-    console.log(
-      userData && userData.username && userData.username !== user.username
-    );
+    // console.log(
+    //   userData && userData.username && userData.username !== user.username
+    // );
     if (userData && userData.username && userData.username !== user.username) {
       return new Response(
         404,
@@ -90,10 +90,6 @@ export const editUserHandler = function (schema, request) {
 
 export const getBookmarkPostsHandler = function (schema, request) {
   const user = requiresAuth.call(this, request);
-  console.log(
-    "🚀 ~ file: UserController.js:93 ~ getBookmarkPostsHandler ~ user:",
-    user
-  );
   try {
     if (!user) {
       return new Response(
@@ -139,7 +135,7 @@ export const bookmarkPostHandler = function (schema, request) {
       );
     }
     const isBookmarked = user.bookmarks.some(
-      (currPost) => currPost._id === postId
+      (currPostId) => currPostId === postId
     );
     if (isBookmarked) {
       return new Response(
@@ -148,12 +144,11 @@ export const bookmarkPostHandler = function (schema, request) {
         { errors: ["This Post is already bookmarked"] }
       );
     }
-    user.bookmarks.push(post);
+    user.bookmarks.push(post._id);
     this.db.users.update(
       { _id: user._id },
       { ...user, updatedAt: formatDate() }
     );
-
     return new Response(200, {}, { bookmarks: user.bookmarks });
   } catch (error) {
     return new Response(
@@ -187,13 +182,13 @@ export const removePostFromBookmarkHandler = function (schema, request) {
       );
     }
     const isBookmarked = user.bookmarks.some(
-      (currPost) => currPost._id === postId
+      (currPostId) => currPostId === postId
     );
     if (!isBookmarked) {
       return new Response(400, {}, { errors: ["Post not bookmarked yet"] });
     }
     const filteredBookmarks = user.bookmarks.filter(
-      (currPost) => currPost._id !== postId
+      (currPostId) => currPostId !== postId
     );
     user = { ...user, bookmarks: filteredBookmarks };
     this.db.users.update(

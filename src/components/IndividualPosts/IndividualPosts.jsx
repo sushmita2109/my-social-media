@@ -7,9 +7,10 @@ import { DefaultLayout } from "../../Pages/DefaultLayout/DefaultLayout";
 
 export const IndividualPosts = () => {
   const { postId } = useParams();
+
   const { postStates } = usePost();
 
-  const selectedPost = postStates.allPosts.posts.find(
+  const selectedPost = postStates?.allPosts?.posts?.find(
     (post) => post._id === postId
   );
 

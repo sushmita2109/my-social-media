@@ -23,6 +23,18 @@ export const PostProvider = ({ children }) => {
       console.log(e);
     }
   };
+  const getUserPosts = async (userName) => {
+    try {
+      const response = await axios.get(`/api/posts/user/${userName}`);
+      const posts = response.data.posts;
+
+      if (response.status === 200) {
+        postDispatch({ type: "SET_USER_POSTS", payload: posts });
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   const getDeletedData = async (postId) => {
     try {

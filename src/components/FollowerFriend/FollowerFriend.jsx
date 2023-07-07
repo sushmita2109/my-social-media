@@ -54,6 +54,7 @@ export const FollowerFriend = () => {
   };
   useEffect(() => {
     getUsers();
+    console.log("follower -->", postStates);
   }, []);
 
   return (
