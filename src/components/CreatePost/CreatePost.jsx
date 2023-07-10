@@ -22,7 +22,7 @@ export const CreatePost = ({ handleClose }) => {
         body: JSON.stringify({ postData: newPost }),
       });
       const data = await response.json();
-      postDispatch({ type: "GET_POSTS", payload: data });
+      postDispatch({ type: "CREATE_NEW_POST", payload: data.posts });
       setNewPost(" ");
     } catch (e) {
       console.log(e);

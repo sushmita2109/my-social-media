@@ -12,6 +12,11 @@ export const postReducer = (state, action) => {
         allPosts: action.payload,
       };
     }
+    case "CREATE_NEW_POST":
+      return {
+        ...state,
+        allposts: action.payload,
+      };
     case "UPDATE_LIKE_POST": {
       return {
         ...state,
