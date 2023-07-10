@@ -1,37 +1,62 @@
 import { useContext, useReducer, useState } from "react";
 import { createContext } from "react";
-import { initialState } from "../../Reducer/AuthReducer/AuthReducer";
+import axios from "axios";
 import { authReducer } from "../../Reducer/AuthReducer/AuthReducer";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const localStorageData = JSON.parse(localStorage.getItem("data"));
+
+  const initialState = {
+    user: localStorageData?.user || {},
+    token: localStorageData?.token || "",
+  };
   const [authState, authDispatch] = useReducer(authReducer, initialState);
   const [loggedIn, setLoggedIn] = useState(false);
-  const navigate = useNavigate();
 
-  const userDetail = localStorage.getItem("user");
-
-  const handleLogin = async (user, pass) => {
+  const handleLogin = async (loginData) => {
     try {
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        body: JSON.stringify({ username: user, password: pass }),
-      });
+      const { status, data } = await axios.post("/api/auth/login", loginData);
 
-      const data = await response.json();
+      if (status === 200) {
+        localStorage.setItem(
+          "data",
+          JSON.stringify({ user: data?.foundUser, token: data?.encodedToken })
+        );
 
-      localStorage.setItem("token", data.encodedToken);
-      localStorage.setItem("user", JSON.stringify(data.foundUser));
-      authDispatch({ type: "USER_DETAIL", payload: userDetail });
-      setLoggedIn(true);
-      navigate("/home");
-      toast.success("Logged In Successfully");
+        authDispatch({ type: "SET_USER", payload: data?.foundUser });
+        authDispatch({ type: "SET_TOKEN", payload: data?.encodedToken });
+        toast.success("Login Successful!");
+        navigate(location?.state?.from?.pathname || "/");
+      }
     } catch (e) {
-      console.log("🚀 ~ file: AuthContext.js:20 ~ handleLogin ~ e:", e);
+      console.error(e);
+      toast.error(e.response.data.errors[0]);
+    }
+  };
+
+  const userSignup = async (signupData) => {
+    try {
+      const { status, data } = await axios.post(`/api/auth/signup`, signupData);
+      if (status === 201) {
+        localStorage.setItem(
+          "data",
+          JSON.stringify({ user: data?.createdUser, token: data?.encodedToken })
+        );
+        authDispatch({ type: "SET_USER", payload: data?.createdUser });
+        authDispatch({ type: "SET_TOKEN", payload: data?.encodedToken });
+        toast.success("Signup Successful!");
+        navigate(location?.state?.from?.pathname || "/");
+      }
+    } catch (e) {
+      console.error(e);
+      toast.error(e.response.data.errors[0]);
     }
   };
 

@@ -11,7 +11,7 @@ export const posts = [
     _id: uuid(),
     content: "Good Moring",
     likes: {
-      likeCount: 0,
+      likeCount: 3,
       likedBy: [],
       dislikedBy: [],
     },
@@ -63,7 +63,7 @@ export const posts = [
     _id: uuid(),
     content: "Good Moring People",
     likes: {
-      likeCount: 0,
+      likeCount: 6,
       likedBy: [],
       dislikedBy: [],
     },

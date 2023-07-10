@@ -6,11 +6,11 @@ import { FollowerFriend } from "../../components/FollowerFriend/FollowerFriend";
 import { DefaultLayout } from "../DefaultLayout/DefaultLayout";
 
 export const UserFeed = () => {
-  const { loggedIn } = useAuth();
+  const { authState } = useAuth();
 
   return (
     <DefaultLayout>
-      {loggedIn && (
+      {authState?.token && (
         <div>
           <div className="postCard-container">
             <PostCard />

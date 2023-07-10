@@ -33,7 +33,7 @@ export const SideBar = (props) => {
     {
       name: "Home",
       icon: <HomeIcon />,
-      routePath: "/home",
+      routePath: "/",
     },
     {
       name: "Explore",
@@ -48,7 +48,7 @@ export const SideBar = (props) => {
     {
       name: "Logout",
       icon: <LogoutIcon />,
-      routePath: "/login",
+      routePath: "/",
     },
   ];
 

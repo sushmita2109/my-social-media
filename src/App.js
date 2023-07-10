@@ -34,11 +34,11 @@ function App() {
           <Route path="/login" element={<Login />} />
 
           <Route element={<RequireAuth />}>
-            <Route path="/home" element={<Home />} />
+            <Route path="/" element={<Home />} />
             <Route path="/explore" element={<Explore />} />
             <Route path="/:postId" element={<IndividualPosts />} />
             <Route path="/bookmark" element={<Bookmark />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile/:userName" element={<Profile />} />
           </Route>
         </Routes>
       </ThemeProvider>

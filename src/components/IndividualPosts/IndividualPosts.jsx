@@ -17,17 +17,17 @@ export const IndividualPosts = () => {
   return (
     <DefaultLayout>
       <div>
-        <Card key={selectedPost._id} className="post-container">
+        <Card key={selectedPost?._id} className="post-container">
           <div>
             <AccountCircleIcon></AccountCircleIcon>
-            {selectedPost.firstName}
+            {selectedPost?.firstName}
             <div className="username-container">
-              <p>@{selectedPost.username}</p>
-              <p> {selectedPost.updatedAt.toString().split("T")[0]}</p>
+              <p>@{selectedPost?.username}</p>
+              <p> {selectedPost?.updatedAt.toString().split("T")[0]}</p>
             </div>
           </div>
           <div>
-            <p className="post-content">{selectedPost.content}</p>
+            <p className="post-content">{selectedPost?.content}</p>
           </div>
           <ActionButtons post={selectedPost} />
         </Card>

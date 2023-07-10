@@ -6,102 +6,84 @@ import { usePost } from "../../context/PostContext/PostContext";
 import { useAuth } from "../../context/AuthContext/AuthContext";
 import { useEffect } from "react";
 import "./FollowerFriend.css";
+import { Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export const FollowerFriend = () => {
-  const { postDispatch, postStates } = usePost();
-  const { loggedIn } = useAuth();
-  const userDetail = JSON.parse(localStorage.getItem("user"));
-  const token = localStorage.getItem("token");
+  const { postDispatch, postStates, unfollowUserHandler, followUserHandler } =
+    usePost();
+  const { authState } = useAuth();
+  const navigate = useNavigate();
 
-  const followUser = async (user) => {
-    try {
-      const response = await fetch(`/api/users/follow/${user._id}/`, {
-        method: "POST",
-        headers: {
-          authorization: token,
-        },
-      });
-      const data = await response.json();
+  const userData = postStates?.users?.find(
+    (user) => user.username === authState?.user?.username
+  );
 
-      const filteredUsers = postStates?.followingUser?.filter(
-        (user) => user.username !== data.followUser.username
-      );
-      const filterPost = postStates?.allPosts?.posts?.filter(
-        (post) => post.username === data.followUser.username
-      );
-
-      postDispatch({ type: "UPDATE_FOLLOWER_LIST", payload: filteredUsers });
-      postDispatch({ type: "ADD_FOLLOWER_FEED", payload: filterPost });
-    } catch (e) {
-      console.log(e);
-    }
+  const suggestedUsers = postStates?.users
+    ?.filter((user) => user.username !== userData?.username)
+    ?.filter(
+      (eachUser) =>
+        !userData?.following?.find(
+          (data) => data.username === eachUser.username
+        )
+    );
+  const isFollowed = (users, userId) => {
+    const localStorageData = JSON.parse(localStorage.getItem("data"));
+    return users
+      ?.find(({ _id }) => _id === localStorageData?.user?._id)
+      ?.following?.find(({ _id }) => _id === userId)
+      ? true
+      : false;
   };
-
-  const getUsers = async () => {
-    try {
-      if (loggedIn) {
-        const response = await fetch("/api/users");
-        const data = await response.json();
-        const filteredUsers = data?.users?.filter(
-          (user) => user.username !== userDetail.username
-        );
-
-        postDispatch({ type: "USERS_FOLLOWERS", payload: filteredUsers });
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
-  useEffect(() => {
-    getUsers();
-    console.log("follower -->", postStates);
-  }, []);
-
   return (
-    <div>
-      <Card sx={{ width: "300px" }}>
-        {postStates?.followingUser?.length > 0 && (
-          <div>
-            <Typography variant="h6">Suggested Users</Typography>
-
-            <div>
-              {postStates?.followingUser?.map((user) => (
-                <Card
-                  key={user._id}
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    flexWrap: "wrap",
-                    justifyContent: "space-between",
-                    gap: "12px",
-                    padding: "5px",
+    <Box>
+      {suggestedUsers?.length > 0 ? (
+        suggestedUsers
+          ?.splice(0, 3)
+          ?.map(({ _id, firstName, lastName, username, profileAvatar }) => {
+            return (
+              <li key={_id} className="suggested-user">
+                <div
+                  className="suggested-user-name-profile"
+                  onClick={() => {
+                    navigate(`/profile/${username}`);
                   }}
                 >
-                  <div className="username-cont">
-                    <div className="username">
-                      <AccountCircleIcon></AccountCircleIcon>
-                      {user.firstName}
-                    </div>
-                    <p>@{user.username}</p>
+                  <AccountCircleIcon sx={{ fontSize: 50 }}></AccountCircleIcon>
+                  <div className="suggestedUser-name">
+                    <span>
+                      {firstName} {lastName}
+                    </span>
+                    <small>@{username}</small>
                   </div>
-                  <Button
-                    variant="contained"
-                    onClick={() => followUser(user)}
-                    sx={{
-                      //   backgroundColor: "#dabdff",
-                      //   pointerEvents: "none",
-                      height: "45px",
-                      marginTop: "5px",
-                    }}
-                  >
-                    Follow
-                  </Button>
-                </Card>
-              ))}
-            </div>
-          </div>
-        )}
-      </Card>
-    </div>
+                </div>
+                <button
+                  onClick={() => {
+                    if (authState?.token) {
+                      if (isFollowed(postStates?.users, _id)) {
+                        unfollowUserHandler(
+                          authState?.token,
+                          _id,
+                          postDispatch
+                        );
+                      } else {
+                        followUserHandler(authState?.token, _id, postDispatch);
+                      }
+                    } else {
+                      toast.error("Please login to follow");
+                      navigate("/login");
+                    }
+                  }}
+                >
+                  {isFollowed(postStates?.users, _id) ? "Following" : "Follow"}
+                </button>
+              </li>
+            );
+          })
+      ) : (
+        <p>No suggested user is present.</p>
+      )}
+    </Box>
   );
 };
