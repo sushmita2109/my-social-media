@@ -6,7 +6,7 @@ import { usePost } from "../../context/PostContext/PostContext";
 import { useAuth } from "../../context/AuthContext/AuthContext";
 import { useEffect } from "react";
 import "./FollowerFriend.css";
-import { Box } from "@mui/material";
+import { Box, List, ListItem } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -38,52 +38,74 @@ export const FollowerFriend = () => {
   };
   return (
     <Box>
-      {suggestedUsers?.length > 0 ? (
-        suggestedUsers
-          ?.splice(0, 3)
-          ?.map(({ _id, firstName, lastName, username, profileAvatar }) => {
-            return (
-              <li key={_id} className="suggested-user">
-                <div
-                  className="suggested-user-name-profile"
-                  onClick={() => {
-                    navigate(`/profile/${username}`);
-                  }}
-                >
-                  <AccountCircleIcon sx={{ fontSize: 50 }}></AccountCircleIcon>
-                  <div className="suggestedUser-name">
-                    <span>
-                      {firstName} {lastName}
-                    </span>
-                    <small>@{username}</small>
-                  </div>
-                </div>
-                <button
-                  onClick={() => {
-                    if (authState?.token) {
-                      if (isFollowed(postStates?.users, _id)) {
-                        unfollowUserHandler(
-                          authState?.token,
-                          _id,
-                          postDispatch
-                        );
-                      } else {
-                        followUserHandler(authState?.token, _id, postDispatch);
-                      }
-                    } else {
-                      toast.error("Please login to follow");
-                      navigate("/login");
-                    }
-                  }}
-                >
-                  {isFollowed(postStates?.users, _id) ? "Following" : "Follow"}
-                </button>
-              </li>
-            );
-          })
-      ) : (
-        <p>No suggested user is present.</p>
-      )}
+      <List>
+        {suggestedUsers?.length > 0 ? (
+          suggestedUsers
+            ?.splice(0, 3)
+            ?.map(({ _id, firstName, lastName, username, profileAvatar }) => {
+              return (
+                <ListItem key={_id} className="suggested-user">
+                  <Card
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      padding: "8px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        padding: "8px",
+                      }}
+                      onClick={() => {
+                        navigate(`/profile/${username}`);
+                      }}
+                    >
+                      <AccountCircleIcon
+                        sx={{ fontSize: 50 }}
+                      ></AccountCircleIcon>
+                      <div style={{ display: "flex", flexDirection: "column" }}>
+                        <Typography>
+                          {firstName} {lastName}
+                        </Typography>
+                        <Typography>@{username}</Typography>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => {
+                        if (authState?.token) {
+                          if (isFollowed(postStates?.users, _id)) {
+                            unfollowUserHandler(
+                              authState?.token,
+                              _id,
+                              postDispatch
+                            );
+                          } else {
+                            followUserHandler(
+                              authState?.token,
+                              _id,
+                              postDispatch
+                            );
+                          }
+                        } else {
+                          toast.error("Please login to follow");
+                          navigate("/login");
+                        }
+                      }}
+                    >
+                      {isFollowed(postStates?.users, _id)
+                        ? "Following"
+                        : "Follow"}
+                    </button>
+                  </Card>
+                </ListItem>
+              );
+            })
+        ) : (
+          <p>No suggested user is present.</p>
+        )}
+      </List>
     </Box>
   );
 };
