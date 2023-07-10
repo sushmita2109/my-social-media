@@ -45,11 +45,6 @@ export const SideBar = (props) => {
       icon: <BookmarksIcon />,
       routePath: "/bookmark",
     },
-    {
-      name: "Logout",
-      icon: <LogoutIcon />,
-      routePath: "/",
-    },
   ];
 
   return (
@@ -76,6 +71,9 @@ export const SideBar = (props) => {
             {item.name}
           </Button>
         ))}
+        <Button startIcon={<LogoutIcon />} onClick={() => handlelogout()}>
+          Logout
+        </Button>
 
         <IconButton
           sx={{

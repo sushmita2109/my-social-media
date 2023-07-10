@@ -183,7 +183,7 @@ export const PostProvider = ({ children }) => {
   const unfollowUserHandler = async (
     encodedToken,
     followUserId,
-    dataDispatch
+    postDispatch
   ) => {
     try {
       const { data, status } = await axios.post(
@@ -194,8 +194,8 @@ export const PostProvider = ({ children }) => {
         }
       );
       if (status === 200 || status === 201) {
-        dataDispatch({ type: "UPDATE_USER", payload: data?.followUser });
-        dataDispatch({ type: "UPDATE_USER", payload: data?.user });
+        postDispatch({ type: "UPDATE_USER", payload: data?.followUser });
+        postDispatch({ type: "UPDATE_USER", payload: data?.user });
         toast.success(`Unfollowed @${data?.followUser?.username}`);
       }
     } catch (e) {
@@ -207,7 +207,7 @@ export const PostProvider = ({ children }) => {
   const followUserHandler = async (
     encodedToken,
     followUserId,
-    dataDispatch
+    postDispatch
   ) => {
     try {
       const { data, status } = await axios.post(
@@ -218,8 +218,8 @@ export const PostProvider = ({ children }) => {
         }
       );
       if (status === 200 || status === 201) {
-        dataDispatch({ type: "UPDATE_USER", payload: data?.followUser });
-        dataDispatch({ type: "UPDATE_USER", payload: data?.user });
+        postDispatch({ type: "UPDATE_USER", payload: data?.followUser });
+        postDispatch({ type: "UPDATE_USER", payload: data?.user });
         toast.success(`Followed @${data?.followUser?.username}`);
       }
     } catch (e) {

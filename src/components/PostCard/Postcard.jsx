@@ -17,6 +17,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { useEffect, useState } from "react";
 import FixedBottomNavigation from "../FixedBottomNavigation/FixedBottomNavigation";
 import { useAuth } from "../../context/AuthContext/AuthContext";
+import { FollowMenu } from "../FollowMenu/FollowMenu";
 
 const updateDate = (postDate) => {
   return moment(postDate).format("MMMM  D, YYYY ");
@@ -146,11 +147,15 @@ export const PostCard = () => {
                       </Typography>
                     </Box>
                   </Box>
-                  <ContextualMenuBar
-                    post={post}
-                    getDeletedData={getDeletedData}
-                    getEditPost={getEditPost}
-                  />
+                  {authState?.user?.username == post?.username ? (
+                    <ContextualMenuBar
+                      post={post}
+                      getDeletedData={getDeletedData}
+                      getEditPost={getEditPost}
+                    />
+                  ) : (
+                    <FollowMenu post={post} />
+                  )}
                 </Box>
 
                 <Box

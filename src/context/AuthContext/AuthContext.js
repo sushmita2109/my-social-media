@@ -61,8 +61,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   const handlelogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    localStorage.removeItem("data");
+    authDispatch({ type: "LOGOUT" });
     setLoggedIn(false);
   };
 
@@ -74,6 +74,7 @@ export const AuthProvider = ({ children }) => {
         authDispatch,
         loggedIn,
         handlelogout,
+        userSignup,
       }}
     >
       {children}

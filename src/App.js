@@ -8,11 +8,13 @@ import { Bookmark } from "./components/Bookmark/Bookmark";
 import { NavBar } from "./components/Navbar/NavBar";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
 import { Home } from "./Pages/Home/Home";
 import { Explore } from "./Pages/Explore/Explore";
 import { Profile } from "./Pages/Profile/Profile";
+import { SignUp } from "./Pages/SignUp/SignUp";
 
 function App() {
   const [islight, setIsLight] = useState(true);
@@ -32,6 +34,7 @@ function App() {
         <CssBaseline />
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
 
           <Route element={<RequireAuth />}>
             <Route path="/" element={<Home />} />
@@ -41,6 +44,7 @@ function App() {
             <Route path="/profile/:userName" element={<Profile />} />
           </Route>
         </Routes>
+        <ToastContainer />
       </ThemeProvider>
     </div>
   );
