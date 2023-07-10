@@ -1,30 +1,13 @@
-export const initialState = {
-  user: {},
-  following: {},
-  username: "",
-  password: "",
-};
-
-export const authReducer = (action, state) => {
+export const authReducer = (state, action) => {
   switch (action.type) {
-    case "USER_DETAIL": {
-      return {
-        ...state,
-        user: action.payload,
-      };
+    case "SET_USER":
+      return { ...state, user: action.payload };
+    case "SET_TOKEN":
+      return { ...state, token: action.payload };
+    case "LOGOUT": {
+      return { ...state, user: "", token: "" };
     }
-    case "SET_USERNAME":
-      return { ...state, username: action.payload };
-    case "SET_PASSWORD":
-      return { ...state, password: action.payload };
-    case "FOLLOWER_ADDED": {
-      return {
-        ...state,
-        following: action.payload,
-      };
-    }
-    default: {
+    default:
       return state;
-    }
   }
 };

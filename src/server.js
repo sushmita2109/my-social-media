@@ -43,10 +43,11 @@ export function makeServer({ environment = "development" } = {}) {
       server.logging = false;
       users.forEach((item) =>
         server.create("user", {
-          ...item,
           followers: [],
           following: [],
           bookmarks: [],
+          imageId: "",
+          ...item,
         })
       );
       posts.forEach((item) => server.create("post", { ...item }));
@@ -86,11 +87,6 @@ export function makeServer({ environment = "development" } = {}) {
       this.post(
         "/users/unfollow/:followUserId/",
         unfollowUserHandler.bind(this)
-      );
-
-      // to allow cloudinary route
-      this.passthrough(
-        "https://api.cloudinary.com/v1_1/ddfyxmlhe/image/upload"
       );
     },
   });

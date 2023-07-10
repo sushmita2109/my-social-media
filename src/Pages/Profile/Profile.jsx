@@ -1,13 +1,18 @@
-import Box from "@mui/material/Box";
-import { ProfileUserDetail } from "../../components/ProfileUserDetail/ProfileUserDetail";
+import { Box } from "@mui/material";
 import { useParams } from "react-router-dom";
+import { usePost } from "../../context/PostContext/PostContext";
+import { ProfileUserDetail } from "../../components/ProfileUserDetail/ProfileUserDetail";
 
 export const Profile = () => {
   const { userName } = useParams();
-  console.log("🚀 ~ file: Profile.jsx:7 ~ Profile ~ userName:", userName);
+  const { postStates } = usePost();
+  const profileUser = postStates?.users?.filter(
+    ({ username }) => username === userName
+  );
+
   return (
-    <Box sx={{ alignItems: "center", justifyContent: "center" }}>
-      <ProfileUserDetail userName={userName} />
+    <Box>
+      <ProfileUserDetail profileUser={profileUser} />
     </Box>
   );
 };

@@ -1,7 +1,7 @@
 export const initialState = {
   allPosts: [],
   bookMarks: [],
-  userfeeds: [],
+  users: [],
   followingUser: [],
 };
 export const postReducer = (state, action) => {
@@ -12,7 +12,33 @@ export const postReducer = (state, action) => {
         allPosts: action.payload,
       };
     }
-    case "GET_BOOKMARK": {
+    case "UPDATE_LIKE_POST": {
+      return {
+        ...state,
+        allPosts: action.payload,
+      };
+    }
+    case "UPDATE_UNLIKE_POST": {
+      return {
+        ...state,
+        allPosts: action.payload,
+      };
+    }
+    case "UPDATE_USER":
+      return {
+        ...state,
+        users: state.users.map((user) =>
+          user._id === action.payload._id ? action.payload : user
+        ),
+      };
+
+    case "ADD_BOOKMARK": {
+      return {
+        ...state,
+        bookMarks: action.payload,
+      };
+    }
+    case "REMOVE_BOOKMARK": {
       return {
         ...state,
         bookMarks: action.payload,
@@ -25,10 +51,10 @@ export const postReducer = (state, action) => {
         allPosts: action.payload,
       };
     }
-    case "USER_FEEDS": {
+    case "SET_ALL_USERS": {
       return {
         ...state,
-        userfeeds: action.payload,
+        users: action.payload,
       };
     }
     case "EDIT_POST": {

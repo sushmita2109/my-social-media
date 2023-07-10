@@ -16,19 +16,20 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useEffect, useState } from "react";
 import FixedBottomNavigation from "../FixedBottomNavigation/FixedBottomNavigation";
-
-const ascendingOrder = (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt);
+import { useAuth } from "../../context/AuthContext/AuthContext";
+import { FollowMenu } from "../FollowMenu/FollowMenu";
 
 const updateDate = (postDate) => {
   return moment(postDate).format("MMMM  D, YYYY ");
 };
 
 export const PostCard = () => {
-  const { postStates, postDispatch, getDeletedData, getEditPost } = usePost();
-  const userDetail = JSON.parse(localStorage.getItem("user"));
+  const { postStates, getDeletedData, getEditPost, getSortedPosts } = usePost();
+
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
   const open = Boolean(anchorEl);
+  const { authState } = useAuth();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -37,16 +38,26 @@ export const PostCard = () => {
     setAnchorEl(null);
   };
 
-  const getData = () => {
-    const userfeedPosts = postStates?.allPosts?.posts?.filter(
-      (post) => post.username === userDetail.username
-    );
-    postDispatch({ type: "USER_FEEDS", payload: userfeedPosts });
+  const loggedInUser = postStates?.users?.find(
+    ({ username }) => username === authState?.user?.username
+  );
+
+  const postsOfFollowed = postStates?.allPosts?.filter(
+    (post) =>
+      loggedInUser?.following?.some(
+        ({ username }) => username === post.username
+      ) || authState?.user?.username === post.username
+  );
+
+  const [sortByOption, setSortByOption] = useState("Latest");
+
+  const sortedPosts = getSortedPosts(postsOfFollowed, sortByOption);
+
+  const handleMenu = (e) => {
+    setSortByOption(e.target.innerText);
+    handleClose();
   };
-  useEffect(() => {
-    getData();
-  }, []);
-  console.log(postStates.userfeeds);
+
   return (
     <Box
       sx={{
@@ -79,15 +90,21 @@ export const PostCard = () => {
             "aria-labelledby": "basic-button",
           }}
         >
-          <MenuItem onClick={handleClose}>Latest</MenuItem>
-          <MenuItem onClick={handleClose}>Oldest</MenuItem>
-          <MenuItem onClick={handleClose}>Trending</MenuItem>
+          <MenuItem value="LATEST" onClick={(e) => handleMenu(e)}>
+            LATEST
+          </MenuItem>
+          <MenuItem value="OLDEST" onClick={(e) => handleMenu(e)}>
+            OLDEST
+          </MenuItem>
+          <MenuItem value="TRENDING" onClick={(e) => handleMenu(e)}>
+            TRENDING
+          </MenuItem>
         </Menu>
       </Box>
 
       <List>
-        {postStates.userfeeds?.length > 0 &&
-          postStates.userfeeds?.sort(ascendingOrder).map((post) => (
+        {sortedPosts?.length > 0 &&
+          sortedPosts?.map((post) => (
             <ListItem key={post._id} sx={{ justifyContent: "center" }}>
               <Card
                 sx={{
@@ -130,11 +147,15 @@ export const PostCard = () => {
                       </Typography>
                     </Box>
                   </Box>
-                  <ContextualMenuBar
-                    post={post}
-                    getDeletedData={getDeletedData}
-                    getEditPost={getEditPost}
-                  />
+                  {authState?.user?.username == post?.username ? (
+                    <ContextualMenuBar
+                      post={post}
+                      getDeletedData={getDeletedData}
+                      getEditPost={getEditPost}
+                    />
+                  ) : (
+                    <FollowMenu post={post} />
+                  )}
                 </Box>
 
                 <Box

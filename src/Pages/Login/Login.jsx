@@ -13,14 +13,16 @@ import Typography from "@mui/material/Typography";
 import "./Login.css";
 import { useAuth } from "../../context/AuthContext/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [userName, setUserName] = useState("");
-  const [userPassword, setPassword] = useState("");
+  const [userData, setUserData] = useState({
+    username: "",
+    password: "",
+  });
   const { handleLogin } = useAuth();
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -28,10 +30,21 @@ export const Login = () => {
     event.preventDefault();
   };
 
+  const guestUserData = {
+    username: "adarshbalika",
+    password: "adarshBalika123",
+  };
+  const userLogin = () => {
+    if (!userData.username.trim() || !userData.password.trim()) {
+      toast.error("Enter valid input!");
+    } else {
+      handleLogin(userData);
+    }
+  };
+
   const loginGuest = (user, pass) => {
-    setUserName(user);
-    setPassword(pass);
-    handleLogin(user, pass);
+    setUserData(guestUserData);
+    handleLogin(guestUserData);
   };
 
   return (
@@ -65,8 +78,10 @@ export const Login = () => {
               Username
             </InputLabel>
             <OutlinedInput
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
+              value={userData.username}
+              onChange={(e) =>
+                setUserData((prev) => ({ ...prev, username: e.target.value }))
+              }
               id="outlined-adornment-username"
               label="Username"
             />
@@ -76,8 +91,10 @@ export const Login = () => {
               Password
             </InputLabel>
             <OutlinedInput
-              value={userPassword}
-              onChange={(e) => setPassword(e.target.value)}
+              value={userData.password}
+              onChange={(e) =>
+                setUserData((prev) => ({ ...prev, password: e.target.value }))
+              }
               id="outlined-adornment-password"
               type={showPassword ? "text" : "password"}
               endAdornment={
@@ -97,18 +114,24 @@ export const Login = () => {
           </FormControl>
           <Button
             variant="contained"
-            onClick={() => handleLogin(userName, userPassword)}
+            onClick={() => userLogin()}
             sx={{ marginBottom: "3px" }}
           >
             Login
           </Button>
           <Button
             variant="contained"
-            onClick={() => loginGuest("adarshbalika", "adarshBalika123")}
+            onClick={() => loginGuest()}
             sx={{ marginBottom: "3px" }}
           >
             Login as Guest
           </Button>
+          <p
+            onClick={() => navigate("/signup")}
+            className="create-new-account-link"
+          >
+            Create New account <i className="fa-solid fa-angle-right"></i>
+          </p>
         </div>
       </Card>
     </Box>

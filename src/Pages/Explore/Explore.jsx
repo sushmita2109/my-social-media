@@ -91,12 +91,13 @@ const UserInfoHeader = ({ data }) => {
 
 export const Explore = () => {
   const { postStates } = usePost();
-  const userDetail = JSON.parse(localStorage.getItem("user"));
+  const { authState } = useAuth();
+
+  const exploreData = postStates?.allPosts?.filter(
+    ({ username }) => username !== authState?.user?.username
+  );
 
   const navigate = useNavigate();
-  const filteredData = postStates?.allPosts?.posts?.filter(
-    (post) => post.username !== userDetail.username
-  );
 
   return (
     <DefaultLayout>
@@ -108,7 +109,7 @@ export const Explore = () => {
         }}
       >
         <List>
-          {filteredData?.map((data) => (
+          {exploreData?.map((data) => (
             <ListItem key={data._id}>
               <Card sx={{ width: 500 }}>
                 <UserInfoHeader data={data} />

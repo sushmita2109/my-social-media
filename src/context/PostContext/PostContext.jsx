@@ -2,15 +2,24 @@ import { createContext, useContext, useEffect, useReducer } from "react";
 import { initialState } from "../../Reducer/PostReducer/PostReducer";
 import { postReducer } from "../../Reducer/PostReducer/PostReducer";
 import axios from "axios";
+import { toast } from "react-toastify";
 import { useAuth } from "../AuthContext/AuthContext";
 
 export const PostContext = createContext();
 export const PostProvider = ({ children }) => {
   const [postStates, postDispatch] = useReducer(postReducer, initialState);
-  const token = localStorage.getItem("token");
-  const { authStates } = useAuth();
-  const headers = {
-    authorization: token,
+
+  const { authState } = useAuth();
+
+  const getAllUsers = async () => {
+    try {
+      const { data, status } = await axios.get("/api/users");
+      if (status === 200) {
+        postDispatch({ type: "SET_ALL_USERS", payload: data?.users });
+      }
+    } catch (e) {
+      toast.error(e.response.data.errors[0]);
+    }
   };
 
   const getData = async () => {
@@ -18,21 +27,9 @@ export const PostProvider = ({ children }) => {
       const response = await fetch("/api/posts");
       const data = await response.json();
 
-      postDispatch({ type: "GET_POSTS", payload: data });
+      postDispatch({ type: "GET_POSTS", payload: data.posts });
     } catch (e) {
       console.log(e);
-    }
-  };
-  const getUserPosts = async (userName) => {
-    try {
-      const response = await axios.get(`/api/posts/user/${userName}`);
-      const posts = response.data.posts;
-
-      if (response.status === 200) {
-        postDispatch({ type: "SET_USER_POSTS", payload: posts });
-      }
-    } catch (e) {
-      console.error(e);
     }
   };
 
@@ -41,7 +38,7 @@ export const PostProvider = ({ children }) => {
       const response = await fetch(`/api/posts/${postId}`, {
         method: "DELETE",
         headers: {
-          authorization: token,
+          authorization: authState?.token,
         },
         body: JSON.stringify(postId),
       });
@@ -57,7 +54,7 @@ export const PostProvider = ({ children }) => {
       const response = await fetch(`/api/posts/edit/${postId}`, {
         method: "POST",
         headers: {
-          authorization: token,
+          authorization: authState?.token,
         },
         body: JSON.stringify({ postData: { content: content } }),
       });
@@ -73,10 +70,12 @@ export const PostProvider = ({ children }) => {
       const response = await fetch(`/api/users/bookmark/${post._id}/`, {
         method: "POST",
         headers: {
-          authorization: token,
+          authorization: authState?.token,
         },
       });
       const data = await response.json();
+
+      postDispatch({ type: "ADD_BOOKMARK", payload: data?.bookmarks });
     } catch (e) {
       console.log(e);
     }
@@ -87,10 +86,12 @@ export const PostProvider = ({ children }) => {
       const response = await fetch(`/api/users/remove-bookmark/${post._id}/`, {
         method: "POST",
         headers: {
-          authorization: token,
+          authorization: authState?.token,
         },
       });
       const data = await response.json();
+
+      postDispatch({ type: "REMOVE_BOOKMARK", payload: data?.bookmarks });
     } catch (e) {
       console.log(e);
     }
@@ -101,11 +102,11 @@ export const PostProvider = ({ children }) => {
       const response = await fetch(`api/posts/dislike/${post._id}`, {
         method: "POST",
         headers: {
-          authorization: token,
+          authorization: authState?.token,
         },
       });
       const data = await response.json();
-      postDispatch({ type: "GET_POSTS", payload: data });
+      postDispatch({ type: "UPDATE_UNLIKE_POST", payload: data.posts });
     } catch (e) {
       console.log(e);
     }
@@ -115,20 +116,124 @@ export const PostProvider = ({ children }) => {
       const response = await fetch(`api/posts/like/${post._id}`, {
         method: "POST",
         headers: {
-          authorization: token,
+          authorization: authState?.token,
         },
       });
 
       const data = await response.json();
-      postDispatch({ type: "GET_POSTS", payload: data });
+
+      postDispatch({ type: "UPDATE_LIKE_POST", payload: data.posts });
     } catch (e) {
       console.log(e);
     }
   };
+  const getAllBookmarks = async () => {
+    try {
+      const { data, status } = await axios.get(`api/users/bookmark`, {
+        headers: {
+          authorization: authState?.token,
+        },
+      });
+      if (status === 200) {
+        postDispatch({ type: "SET_ALL_BOOKMARKS", payload: data?.bookmarks });
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
+  const getSortedPosts = (posts, sortBy) => {
+    switch (sortBy.toUpperCase()) {
+      case "LATEST":
+        return [...posts].sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+      case "OLDEST":
+        return [...posts].sort(
+          (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+        );
+      case "TRENDING":
+        return [...posts].sort((a, b) => b.likes.likeCount - a.likes.likeCount);
+      default:
+        return [...posts];
+    }
+  };
+
+  const editUserProfileHandler = async (
+    userData,
+    encodedToken,
+    dataDispatch
+  ) => {
+    try {
+      const { data, status } = await axios.post(
+        `/api/users/edit`,
+        { userData },
+        {
+          headers: { authorization: encodedToken },
+        }
+      );
+      if (status === 201 || status === 200) {
+        dataDispatch({ type: "EDIT_USER", payload: data?.user });
+      }
+    } catch (e) {
+      console.error(e);
+      toast.error("Something went wrong, try again!");
+    }
+  };
+  const unfollowUserHandler = async (
+    encodedToken,
+    followUserId,
+    postDispatch
+  ) => {
+    try {
+      const { data, status } = await axios.post(
+        `/api/users/unfollow/${followUserId}`,
+        {},
+        {
+          headers: { authorization: encodedToken },
+        }
+      );
+      if (status === 200 || status === 201) {
+        postDispatch({ type: "UPDATE_USER", payload: data?.followUser });
+        postDispatch({ type: "UPDATE_USER", payload: data?.user });
+        toast.success(`Unfollowed @${data?.followUser?.username}`);
+      }
+    } catch (e) {
+      console.error(e);
+      toast.error(e?.response?.data?.errors[0]);
+    }
+  };
+
+  const followUserHandler = async (
+    encodedToken,
+    followUserId,
+    postDispatch
+  ) => {
+    try {
+      const { data, status } = await axios.post(
+        `/api/users/follow/${followUserId}`,
+        {},
+        {
+          headers: { authorization: encodedToken },
+        }
+      );
+      if (status === 200 || status === 201) {
+        postDispatch({ type: "UPDATE_USER", payload: data?.followUser });
+        postDispatch({ type: "UPDATE_USER", payload: data?.user });
+        toast.success(`Followed @${data?.followUser?.username}`);
+      }
+    } catch (e) {
+      console.error(e);
+      toast.error(e?.response?.data?.errors[0]);
+    }
+  };
   useEffect(() => {
-    getData();
-  }, []);
+    if (authState?.token) {
+      getData();
+      getAllUsers();
+      getAllBookmarks();
+    }
+  }, [authState?.token]);
 
   return (
     <PostContext.Provider
@@ -142,6 +247,10 @@ export const PostProvider = ({ children }) => {
         postDispatch,
         getDeletedData,
         getEditPost,
+        getSortedPosts,
+        editUserProfileHandler,
+        unfollowUserHandler,
+        followUserHandler,
       }}
     >
       {children}

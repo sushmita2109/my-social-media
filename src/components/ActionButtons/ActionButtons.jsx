@@ -1,7 +1,7 @@
 import IconButton from "@mui/material/IconButton";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+import { toast } from "react-toastify";
 import ShareIcon from "@mui/icons-material/Share";
 import Badge from "@mui/material/Badge";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
@@ -40,10 +40,11 @@ export const ActionButtons = ({ post }) => {
       removeBookMark(post);
     }
   };
+
   return (
     <Stack direction={"row"} spacing={12}>
       <IconButton onClick={() => handleFav(fav)}>
-        <Badge badgeContent={post.likes.likeCount} sx={{ color: "red" }}>
+        <Badge badgeContent={post?.likes?.likeCount} sx={{ color: "red" }}>
           {fav ? (
             <FavoriteIcon
               sx={{
@@ -59,9 +60,7 @@ export const ActionButtons = ({ post }) => {
           )}
         </Badge>
       </IconButton>
-      <IconButton>
-        <ChatBubbleOutlineIcon sx={{ color: "black" }} />
-      </IconButton>
+
       <IconButton>
         <ShareIcon />
       </IconButton>
