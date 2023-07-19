@@ -22,6 +22,7 @@ export const CreatePost = ({ handleClose }) => {
         body: JSON.stringify({ postData: newPost }),
       });
       const data = await response.json();
+      console.log("🚀 ~ file: CreatePost.jsx:25 ~ addPost ~ data:", data.posts);
       postDispatch({ type: "CREATE_NEW_POST", payload: data.posts });
       setNewPost(" ");
     } catch (e) {
@@ -41,7 +42,7 @@ export const CreatePost = ({ handleClose }) => {
           rows={4}
           value={newPost}
           placeholder="Enter the Post"
-          onChange={(e) => setNewPost(e.target.value)}
+          onChange={(e) => setNewPost((prev) => [...prev, e.target.value])}
         />
         <Box
           sx={{
