@@ -14,12 +14,16 @@ export const CreatePost = ({ handleClose }) => {
 
   const addPost = async () => {
     try {
+      console.log(
+        "🚀 ~ file: CreatePost.jsx:12 ~ CreatePost ~ newPost:",
+        newPost
+      );
       const response = await fetch("/api/posts", {
         method: "POST",
         headers: {
           authorization: token,
         },
-        body: JSON.stringify({ postData: newPost }),
+        body: JSON.stringify({ postData: { content: newPost } }),
       });
       const data = await response.json();
       console.log("🚀 ~ file: CreatePost.jsx:25 ~ addPost ~ data:", data.posts);
@@ -33,6 +37,11 @@ export const CreatePost = ({ handleClose }) => {
     }
   };
 
+  const setInputHandler = (e) => {
+    const inputValue = e.target.value.slice(0, 256);
+    setNewPost(inputValue);
+  };
+
   return (
     <Card>
       <FormControl sx={{ m: 1, width: "55ch" }}>
@@ -42,7 +51,7 @@ export const CreatePost = ({ handleClose }) => {
           rows={4}
           value={newPost}
           placeholder="Enter the Post"
-          onChange={(e) => setNewPost((prev) => [...prev, e.target.value])}
+          onChange={(e) => setInputHandler(e)}
         />
         <Box
           sx={{
