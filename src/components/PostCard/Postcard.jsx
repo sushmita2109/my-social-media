@@ -42,6 +42,11 @@ export const PostCard = () => {
     ({ username }) => username === authState?.user?.username
   );
 
+  console.log(
+    "🚀 ~ file: Postcard.jsx:46 ~ PostCard ~ postStates?.allPosts:",
+    postStates?.allPosts
+  );
+
   const postsOfFollowed = postStates?.allPosts?.filter(
     (post) =>
       loggedInUser?.following?.some(

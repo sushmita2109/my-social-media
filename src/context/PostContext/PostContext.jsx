@@ -43,7 +43,7 @@ export const PostProvider = ({ children }) => {
         body: JSON.stringify(postId),
       });
       const data = await response.json();
-      postDispatch({ type: "DELETED_DATA", payload: data });
+      postDispatch({ type: "DELETED_DATA", payload: data.posts });
     } catch (e) {
       console.log(e.message);
     }
@@ -59,7 +59,8 @@ export const PostProvider = ({ children }) => {
         body: JSON.stringify({ postData: { content: content } }),
       });
       const data = await response.json();
-      postDispatch({ type: "EDIT_POST", payload: data });
+
+      postDispatch({ type: "EDIT_POST", payload: data.posts });
     } catch (e) {
       console.log(e);
     }
@@ -74,6 +75,7 @@ export const PostProvider = ({ children }) => {
         },
       });
       const data = await response.json();
+      console.log("🚀 ~ file: PostContext.jsx:77 ~ addBookMark ~ data:", data);
 
       postDispatch({ type: "ADD_BOOKMARK", payload: data?.bookmarks });
     } catch (e) {
@@ -90,6 +92,10 @@ export const PostProvider = ({ children }) => {
         },
       });
       const data = await response.json();
+      console.log(
+        "🚀 ~ file: PostContext.jsx:93 ~ removeBookMark ~ data:",
+        data
+      );
 
       postDispatch({ type: "REMOVE_BOOKMARK", payload: data?.bookmarks });
     } catch (e) {

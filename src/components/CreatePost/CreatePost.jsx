@@ -14,10 +14,6 @@ export const CreatePost = ({ handleClose }) => {
 
   const addPost = async () => {
     try {
-      console.log(
-        "🚀 ~ file: CreatePost.jsx:12 ~ CreatePost ~ newPost:",
-        newPost
-      );
       const response = await fetch("/api/posts", {
         method: "POST",
         headers: {
@@ -26,7 +22,8 @@ export const CreatePost = ({ handleClose }) => {
         body: JSON.stringify({ postData: { content: newPost } }),
       });
       const data = await response.json();
-      console.log("🚀 ~ file: CreatePost.jsx:25 ~ addPost ~ data:", data.posts);
+      console.log("🚀 ~ file: CreatePost.jsx:25 ~ addPost ~ data:", data);
+
       postDispatch({ type: "CREATE_NEW_POST", payload: data.posts });
       setNewPost(" ");
     } catch (e) {
