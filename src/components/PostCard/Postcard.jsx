@@ -3,7 +3,7 @@ import { ContextualMenuBar } from "../ContextualMenuBar/ContextualMenuBar";
 import Card from "@mui/material/Card";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import Avatar from "@mui/material/Avatar";
 import "./PostCard.css";
 import { ActionButtons } from "../ActionButtons/ActionButtons";
 import { useNavigate, Link } from "react-router-dom";
@@ -133,10 +133,12 @@ export const PostCard = () => {
                     }}
                   >
                     <Box sx={{ display: "flex" }}>
-                      <AccountCircleIcon
+                      <Avatar
+                        alt="Remy Sharp"
+                        src={post.profile_pic}
                         onClick={() => navigate(`profile/${post.username}`)}
                         sx={{ fontSize: 50 }}
-                      ></AccountCircleIcon>
+                      />
                     </Box>
                     <Box sx={{ display: "flex", flexDirection: "column" }}>
                       <Typography variant="body1">{post.firstName}</Typography>

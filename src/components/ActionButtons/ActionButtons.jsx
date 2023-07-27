@@ -19,13 +19,11 @@ export const ActionButtons = ({ post }) => {
 
   const handleFav = (like) => {
     if (like === false) {
-      setFav(true);
-
       updateLikes(post);
+      setFav(true);
     }
     if (like === true) {
       setFav(false);
-
       updateUnlikePost(post);
     }
   };

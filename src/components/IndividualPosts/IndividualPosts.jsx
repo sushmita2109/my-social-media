@@ -10,9 +10,7 @@ export const IndividualPosts = () => {
 
   const { postStates } = usePost();
 
-  const selectedPost = postStates?.allPosts?.posts?.find(
-    (post) => post._id === postId
-  );
+  const selectedPost = postStates?.allPosts?.find((post) => post._id == postId);
 
   return (
     <DefaultLayout>

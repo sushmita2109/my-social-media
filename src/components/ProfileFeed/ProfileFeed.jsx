@@ -3,7 +3,7 @@ import Card from "@mui/material/Card";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import { ContextualMenuBar } from "../ContextualMenuBar/ContextualMenuBar";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
@@ -43,9 +43,7 @@ export const Profilefeed = ({ userPosts }) => {
                   }}
                 >
                   <Box sx={{ display: "flex" }}>
-                    <AccountCircleIcon
-                      sx={{ fontSize: 50 }}
-                    ></AccountCircleIcon>
+                    <Avatar alt="Remy Sharp" src={post.profile_pic} />
                   </Box>
                   <Box sx={{ display: "flex", flexDirection: "column" }}>
                     <Typography variant="body1">{post.firstName}</Typography>

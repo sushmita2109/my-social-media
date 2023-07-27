@@ -22,7 +22,6 @@ export const CreatePost = ({ handleClose }) => {
         body: JSON.stringify({ postData: { content: newPost } }),
       });
       const data = await response.json();
-      console.log("🚀 ~ file: CreatePost.jsx:25 ~ addPost ~ data:", data);
 
       postDispatch({ type: "CREATE_NEW_POST", payload: data.posts });
       setNewPost(" ");

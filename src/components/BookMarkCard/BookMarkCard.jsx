@@ -1,5 +1,5 @@
 import Card from "@mui/material/Card";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import Avatar from "@mui/material/Avatar";
 import { ActionButtons } from "../ActionButtons/ActionButtons";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -30,7 +30,7 @@ export const BookMarkCard = ({ bookMark }) => {
           }}
         >
           <Box sx={{ display: "flex" }}>
-            <AccountCircleIcon sx={{ fontSize: 50 }}></AccountCircleIcon>
+            <Avatar alt="Remy Sharp" src={bookMark.profile_pic} />
 
             <Box sx={{ display: "flex", flexDirection: "column" }}>
               <Typography variant="body1">{bookMark.firstName}</Typography>

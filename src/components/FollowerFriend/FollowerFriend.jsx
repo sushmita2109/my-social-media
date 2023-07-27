@@ -5,6 +5,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { usePost } from "../../context/PostContext/PostContext";
 import { useAuth } from "../../context/AuthContext/AuthContext";
 import { useEffect } from "react";
+import Avatar from "@mui/material/Avatar";
 import "./FollowerFriend.css";
 import { Box, List, ListItem } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -42,7 +43,7 @@ export const FollowerFriend = () => {
         {suggestedUsers?.length > 0 ? (
           suggestedUsers
             ?.splice(0, 3)
-            ?.map(({ _id, firstName, lastName, username, profileAvatar }) => {
+            ?.map(({ _id, firstName, lastName, username, profile_pic }) => {
               return (
                 <ListItem key={_id} className="suggested-user">
                   <Card
@@ -62,9 +63,7 @@ export const FollowerFriend = () => {
                         navigate(`/profile/${username}`);
                       }}
                     >
-                      <AccountCircleIcon
-                        sx={{ fontSize: 50 }}
-                      ></AccountCircleIcon>
+                      <Avatar alt="Remy Sharp" src={profile_pic} />
                       <div style={{ display: "flex", flexDirection: "column" }}>
                         <Typography>
                           {firstName} {lastName}

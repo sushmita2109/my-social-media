@@ -1,7 +1,7 @@
 import { Button, Card } from "@mui/material";
 import { useAuth } from "../../context/AuthContext/AuthContext";
 import { usePost } from "../../context/PostContext/PostContext";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import Avatar from "@mui/material/Avatar";
 import { useNavigate } from "react-router-dom";
 import { ActionButtons } from "../../components/ActionButtons/ActionButtons";
 import List from "@mui/material/List";
@@ -49,7 +49,7 @@ const UserInfoHeader = ({ data }) => {
           }}
         >
           <div style={{ display: "flex" }}>
-            <AccountCircleIcon sx={{ fontSize: 50 }}></AccountCircleIcon>
+            <Avatar alt="Remy Sharp" src={data.profile_pic} />
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <Typography variant="body1">{data.firstName}</Typography>
