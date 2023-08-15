@@ -1,10 +1,7 @@
 import Card from "@mui/material/Card";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { usePost } from "../../context/PostContext/PostContext";
 import { useAuth } from "../../context/AuthContext/AuthContext";
-import { useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import "./FollowerFriend.css";
 import { Box, List, ListItem } from "@mui/material";

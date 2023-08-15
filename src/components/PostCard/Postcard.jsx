@@ -6,7 +6,7 @@ import ListItem from "@mui/material/ListItem";
 import Avatar from "@mui/material/Avatar";
 import "./PostCard.css";
 import { ActionButtons } from "../ActionButtons/ActionButtons";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { CreatePost } from "../CreatePost/CreatePost";
 import Typography from "@mui/material/Typography";
 import TuneIcon from "@mui/icons-material/Tune";
@@ -14,7 +14,7 @@ import moment from "moment";
 import { Box, Button } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import FixedBottomNavigation from "../FixedBottomNavigation/FixedBottomNavigation";
 import { useAuth } from "../../context/AuthContext/AuthContext";
 import { FollowMenu } from "../FollowMenu/FollowMenu";
@@ -40,11 +40,6 @@ export const PostCard = () => {
 
   const loggedInUser = postStates?.users?.find(
     ({ username }) => username === authState?.user?.username
-  );
-
-  console.log(
-    "🚀 ~ file: Postcard.jsx:46 ~ PostCard ~ postStates?.allPosts:",
-    postStates?.allPosts
   );
 
   const postsOfFollowed = postStates?.allPosts?.filter(

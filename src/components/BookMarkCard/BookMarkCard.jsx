@@ -5,7 +5,7 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import ListItem from "@mui/material/ListItem";
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import { usePost } from "../../context/PostContext/PostContext";
 import { ContextualMenuBar } from "../ContextualMenuBar/ContextualMenuBar";
 import { useAuth } from "../../context/AuthContext/AuthContext";

@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { usePost } from "../../context/PostContext/PostContext";
 import Card from "@mui/material/Card";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import Avatar from "@mui/material/Avatar";
 import { ActionButtons } from "../ActionButtons/ActionButtons";
 import { DefaultLayout } from "../../Pages/DefaultLayout/DefaultLayout";
 
@@ -17,7 +17,7 @@ export const IndividualPosts = () => {
       <div>
         <Card key={selectedPost?._id} className="post-container">
           <div>
-            <AccountCircleIcon></AccountCircleIcon>
+            <Avatar alt="Remy Sharp" src={selectedPost.profile_pic} />
             {selectedPost?.firstName}
             <div className="username-container">
               <p>@{selectedPost?.username}</p>

@@ -2,16 +2,18 @@ import { Box, Button } from "@mui/material";
 import { usePost } from "../../context/PostContext/PostContext";
 import Avatar from "@mui/material/Avatar";
 import Card from "@mui/material/Card";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Typography from "@mui/material/Typography";
 import moment from "moment";
 import { DefaultLayout } from "../../Pages/DefaultLayout/DefaultLayout";
 import { Profilefeed } from "../ProfileFeed/ProfileFeed";
+import { useState } from "react";
+import { EditProfile } from "../EditProfile/EditProfile";
 
 export const ProfileUserDetail = ({ profileUser }) => {
   const { postStates } = usePost();
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const userPosts = postStates?.allPosts?.filter(
     (post) => post.username === profileUser[0].username
@@ -57,8 +59,13 @@ export const ProfileUserDetail = ({ profileUser }) => {
                   </Typography>
                 </Box>
               </Box>
-              <Button>Edit Profile</Button>
+              <Button onClick={() => handleOpen()}>Edit Profile</Button>
             </Box>
+            <EditProfile
+              open={open}
+              onClose={() => handleClose()}
+              profileUser={profile}
+            />
           </Card>
         ))}
         <Profilefeed userPosts={userPosts} />
