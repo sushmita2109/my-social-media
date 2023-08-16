@@ -234,7 +234,7 @@ export const PostProvider = ({ children }) => {
       }
     } catch (e) {
       console.error(e);
-      toast.error(e?.response?.data?.errors[0]);
+      toast.error(e?.response?.data?.errors);
     }
   };
   useEffect(() => {

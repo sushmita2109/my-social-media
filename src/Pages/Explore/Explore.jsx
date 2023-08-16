@@ -22,6 +22,9 @@ const updateDate = (postDate) => {
 
 const UserInfoHeader = ({ data }) => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const { followUserHandler, postDispatch } = usePost();
+  const { authState } = useAuth();
+
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -63,27 +66,6 @@ const UserInfoHeader = ({ data }) => {
             </Typography>
           </div>
         </div>
-        <div>
-          <Button
-            startIcon={<MoreHorizIcon />}
-            id="basic-button"
-            aria-controls={open ? "basic-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-            onClick={handleClick}
-          ></Button>
-        </div>
-        <Menu
-          id="basic-menu"
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          MenuListProps={{
-            "aria-labelledby": "basic-button",
-          }}
-        >
-          <MenuItem>+Follow</MenuItem>
-        </Menu>
       </div>
     </>
   );
