@@ -10,26 +10,19 @@ import { usePost } from "../../context/PostContext/PostContext";
 
 export const FollowMenu = ({ post }) => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [openModal, setOpenModal] = useState(false);
+
   const { authState } = useAuth();
   const { unfollowUserHandler, postStates, postDispatch } = usePost();
 
-  const followuser = postStates?.users?.filter(
+  const followuser = postStates?.users?.find(
     (user) => user.username === post.username
   );
 
-  const isFollowed = (users, userId) => {
-    const localStorageData = JSON.parse(localStorage.getItem("data"));
-    return users
-      ?.find(({ _id }) => _id === localStorageData?.user?._id)
-      ?.following?.find(({ _id }) => _id === userId)
-      ? true
-      : false;
-  };
-
-  const handleOpenModal = () => setOpenModal(true);
-  const handleCloseModal = () => {
-    setOpenModal(false);
+  const handleCloseModal = (e, followUser) => {
+    if (e.target.innerText === "Unfollow") {
+      unfollowUserHandler(authState?.token, followuser._id, postDispatch);
+    }
+    setAnchorEl(null);
   };
 
   const open = Boolean(anchorEl);
@@ -55,17 +48,7 @@ export const FollowMenu = ({ post }) => {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem
-          onClick={() => {
-            if (isFollowed(postStates?.users, followuser._id)) {
-              unfollowUserHandler(
-                authState?.token,
-                followuser?._id,
-                postDispatch
-              );
-            }
-          }}
-        >
+        <MenuItem onClick={(e) => handleCloseModal(e, followuser)}>
           Unfollow
         </MenuItem>
       </Menu>

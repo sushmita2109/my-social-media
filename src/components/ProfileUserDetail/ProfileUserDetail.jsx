@@ -8,9 +8,11 @@ import { DefaultLayout } from "../../Pages/DefaultLayout/DefaultLayout";
 import { Profilefeed } from "../ProfileFeed/ProfileFeed";
 import { useState } from "react";
 import { EditProfile } from "../EditProfile/EditProfile";
+import { useAuth } from "../../context/AuthContext/AuthContext";
 
 export const ProfileUserDetail = ({ profileUser }) => {
   const { postStates } = usePost();
+  const { authState } = useAuth();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -22,6 +24,7 @@ export const ProfileUserDetail = ({ profileUser }) => {
   const updateDate = (postDate) => {
     return moment(postDate).format("MMMM  D, YYYY ");
   };
+
   return (
     <div>
       <DefaultLayout>
@@ -59,7 +62,9 @@ export const ProfileUserDetail = ({ profileUser }) => {
                   </Typography>
                 </Box>
               </Box>
-              <Button onClick={() => handleOpen()}>Edit Profile</Button>
+              {profile?.username?.includes(authState?.user?.username) && (
+                <Button onClick={() => handleOpen()}>Edit Profile</Button>
+              )}
             </Box>
             <EditProfile
               open={open}

@@ -5,11 +5,6 @@ export const initialState = {
   followingUser: [],
 };
 export const postReducer = (state, action) => {
-  console.log(
-    "🚀 ~ file: PostReducer.jsx:8 ~ postReducer ~ state, action:",
-    state,
-    action
-  );
   switch (action.type) {
     case "GET_POSTS": {
       return {

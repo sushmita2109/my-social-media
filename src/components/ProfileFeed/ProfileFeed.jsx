@@ -11,10 +11,19 @@ import { ActionButtons } from "../ActionButtons/ActionButtons";
 import { usePost } from "../../context/PostContext/PostContext";
 
 export const Profilefeed = ({ userPosts }) => {
-  const { getDeletedData, getEditPost } = usePost();
+  const { getDeletedData, getEditPost, postStates } = usePost();
+
   const navigate = useNavigate();
   const updateDate = (postDate) => {
     return moment(postDate).format("MMMM  D, YYYY ");
+  };
+  const getUser = (userName) => {
+    const filterUser = postStates?.users.find(
+      (user) => user.username.toLowerCase() === userName.toLowerCase()
+    );
+    if (filterUser) {
+      return filterUser;
+    }
   };
   return (
     <Box>
@@ -46,8 +55,12 @@ export const Profilefeed = ({ userPosts }) => {
                     <Avatar alt="Remy Sharp" src={post.profile_pic} />
                   </Box>
                   <Box sx={{ display: "flex", flexDirection: "column" }}>
-                    <Typography variant="body1">{post.firstName}</Typography>
-                    <Typography variant="caption">@{post.username}</Typography>
+                    <Typography variant="body1">
+                      {getUser(post.username).firstName}
+                    </Typography>
+                    <Typography variant="caption">
+                      @{getUser(post.username).username}
+                    </Typography>
                   </Box>
 
                   <Box className="username-container">

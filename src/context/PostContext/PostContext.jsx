@@ -199,6 +199,7 @@ export const PostProvider = ({ children }) => {
           headers: { authorization: encodedToken },
         }
       );
+
       if (status === 200 || status === 201) {
         postDispatch({ type: "UPDATE_USER", payload: data?.followUser });
         postDispatch({ type: "UPDATE_USER", payload: data?.user });
@@ -206,7 +207,7 @@ export const PostProvider = ({ children }) => {
       }
     } catch (e) {
       console.error(e);
-      toast.error(e?.response?.data?.errors[0]);
+      toast.error(e?.response?.data?.errors);
     }
   };
 
@@ -223,6 +224,7 @@ export const PostProvider = ({ children }) => {
           headers: { authorization: encodedToken },
         }
       );
+
       if (status === 200 || status === 201) {
         postDispatch({ type: "UPDATE_USER", payload: data?.followUser });
         postDispatch({ type: "UPDATE_USER", payload: data?.user });
