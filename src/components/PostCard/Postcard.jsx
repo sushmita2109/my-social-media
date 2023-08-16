@@ -48,6 +48,14 @@ export const PostCard = () => {
         ({ username }) => username === post.username
       ) || authState?.user?.username === post.username
   );
+  const getuser = (clickedUserName) => {
+    const filterUser = postStates?.users?.find(
+      (user) => user.username.toLowerCase() === clickedUserName.toLowerCase()
+    );
+    if (filterUser) {
+      return filterUser;
+    }
+  };
 
   const [sortByOption, setSortByOption] = useState("Latest");
 
@@ -130,13 +138,15 @@ export const PostCard = () => {
                     <Box sx={{ display: "flex" }}>
                       <Avatar
                         alt="Remy Sharp"
-                        src={post.profile_pic}
+                        src={getuser(post.username).profile_pic}
                         onClick={() => navigate(`profile/${post.username}`)}
                         sx={{ fontSize: 50 }}
                       />
                     </Box>
                     <Box sx={{ display: "flex", flexDirection: "column" }}>
-                      <Typography variant="body1">{post.firstName}</Typography>
+                      <Typography variant="body1">
+                        {getuser(post.username).firstName}
+                      </Typography>
                       <Typography variant="caption">
                         @{post.username}
                       </Typography>

@@ -19,7 +19,7 @@ export const Profilefeed = ({ userPosts }) => {
   };
   const getUser = (userName) => {
     const filterUser = postStates?.users.find(
-      (user) => user.username.toLowerCase() === userName.toLowerCase()
+      (user) => user.username == userName
     );
     if (filterUser) {
       return filterUser;
@@ -52,7 +52,10 @@ export const Profilefeed = ({ userPosts }) => {
                   }}
                 >
                   <Box sx={{ display: "flex" }}>
-                    <Avatar alt="Remy Sharp" src={post.profile_pic} />
+                    <Avatar
+                      alt="Remy Sharp"
+                      src={getUser(post.username).profile_pic}
+                    />
                   </Box>
                   <Box sx={{ display: "flex", flexDirection: "column" }}>
                     <Typography variant="body1">

@@ -9,7 +9,7 @@ export const PostContext = createContext();
 export const PostProvider = ({ children }) => {
   const [postStates, postDispatch] = useReducer(postReducer, initialState);
 
-  const { authState } = useAuth();
+  const { authState, authDispatch } = useAuth();
 
   const getAllUsers = async () => {
     try {
@@ -168,7 +168,7 @@ export const PostProvider = ({ children }) => {
   const editUserProfileHandler = async (
     userData,
     encodedToken,
-    dataDispatch
+    postDispatch
   ) => {
     try {
       const { data, status } = await axios.post(
@@ -178,8 +178,10 @@ export const PostProvider = ({ children }) => {
           headers: { authorization: encodedToken },
         }
       );
+
       if (status === 201 || status === 200) {
-        dataDispatch({ type: "EDIT_USER", payload: data?.user });
+        authDispatch({ type: "EDIT_USER", payload: data?.user });
+        postDispatch({ type: "EDIT_USER", payload: data?.user });
       }
     } catch (e) {
       console.error(e);
