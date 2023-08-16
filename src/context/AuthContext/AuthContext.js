@@ -43,7 +43,18 @@ export const AuthProvider = ({ children }) => {
 
   const userSignup = async (signupData) => {
     try {
-      const { status, data } = await axios.post(`/api/auth/signup`, signupData);
+      const { firstName, lastName, username, email, password } = signupData;
+      const { status, data } = await axios.post(`/api/auth/signup`, {
+        firstName,
+        lastName,
+        username,
+        email,
+        password,
+
+        profile_pic:
+          "https://res.cloudinary.com/dcsyrk6s3/image/upload/v1690179151/avatars/young-woman-white_25030-39552_l54dms.avif",
+        bio: "Aspiring Frontend Devloper",
+      });
       if (status === 201) {
         localStorage.setItem(
           "data",

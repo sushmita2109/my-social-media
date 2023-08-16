@@ -21,7 +21,7 @@ export const SignUp = () => {
     username: "",
     email: "",
     password: "",
-    bio: "",
+    confirmpass: "",
   });
 
   const { userSignup } = useAuth();
@@ -42,10 +42,10 @@ export const SignUp = () => {
       !userDetails?.username.trim() ||
       !userDetails?.email.trim() ||
       !userDetails?.password.trim() ||
-      !userDetails?.confirmPassword.trim()
+      !userDetails?.confirmpass.trim()
     ) {
       toast.error("Enter valid input!");
-    } else if (userDetails?.password !== userDetails?.confirmPassword) {
+    } else if (userDetails?.password !== userDetails?.confirmpass) {
       toast.error("Password & Confirm password should match!");
     } else {
       userSignup(userDetails);
@@ -149,6 +149,35 @@ export const SignUp = () => {
               setUserDetails((prev) => ({
                 ...prev,
                 password: e.target.value,
+              }))
+            }
+            type={showPassword ? "text" : "password"}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+            label="Password"
+          />
+        </FormControl>
+        <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
+          <InputLabel htmlFor="outlined-adornment-password-1">
+            Confirm Password
+          </InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-password-1"
+            value={userDetails.confirmpass}
+            onChange={(e) =>
+              setUserDetails((prev) => ({
+                ...prev,
+                confirmpass: e.target.value,
               }))
             }
             type={showPassword ? "text" : "password"}
