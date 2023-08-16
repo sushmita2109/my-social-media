@@ -9,8 +9,6 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import ExploreIcon from "@mui/icons-material/Explore";
 import { useNavigate } from "react-router-dom";
 
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-
 const buttonDetails = [
   {
     id: 1,

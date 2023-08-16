@@ -25,6 +25,10 @@ const updateDate = (postDate) => {
 
 export const PostCard = () => {
   const { postStates, getDeletedData, getEditPost, getSortedPosts } = usePost();
+  console.log(
+    "🚀 ~ file: Postcard.jsx:28 ~ PostCard ~ postStates:",
+    postStates?.allPosts
+  );
 
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
@@ -48,6 +52,10 @@ export const PostCard = () => {
         ({ username }) => username === post.username
       ) || authState?.user?.username === post.username
   );
+  console.log(
+    "🚀 ~ file: Postcard.jsx:51 ~ PostCard ~ postsOfFollowed:",
+    postsOfFollowed
+  );
   const getuser = (clickedUserName) => {
     const filterUser = postStates?.users?.find(
       (user) => user.username.toLowerCase() === clickedUserName.toLowerCase()
@@ -60,6 +68,10 @@ export const PostCard = () => {
   const [sortByOption, setSortByOption] = useState("Latest");
 
   const sortedPosts = getSortedPosts(postsOfFollowed, sortByOption);
+  console.log(
+    "🚀 ~ file: Postcard.jsx:63 ~ PostCard ~ sortedPosts:",
+    sortedPosts
+  );
 
   const handleMenu = (e) => {
     setSortByOption(e.target.innerText);

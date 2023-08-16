@@ -18,7 +18,7 @@ export const postReducer = (state, action) => {
     case "CREATE_NEW_POST":
       return {
         ...state,
-        allposts: action.payload,
+        allPosts: action.payload,
       };
     case "UPDATE_LIKE_POST": {
       return {
@@ -92,10 +92,6 @@ export const postReducer = (state, action) => {
     }
     case "EDIT_USER": {
       const updatedUser = action.payload;
-      console.log(
-        "🚀 ~ file: PostReducer.jsx:95 ~ postReducer ~ updatedUser:",
-        updatedUser
-      );
 
       if (!updatedUser) {
         return state;
@@ -103,10 +99,6 @@ export const postReducer = (state, action) => {
 
       const userIndex = state.users.findIndex(
         (user) => user._id == updatedUser._id
-      );
-      console.log(
-        "🚀 ~ file: PostReducer.jsx:103 ~ postReducer ~ userIndex:",
-        userIndex
       );
 
       if (userIndex !== -1) {

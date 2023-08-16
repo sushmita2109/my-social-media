@@ -6,18 +6,20 @@ import ImageIcon from "@mui/icons-material/Image";
 import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 import { useState } from "react";
 import { usePost } from "../../context/PostContext/PostContext";
+import { useAuth } from "../../context/AuthContext/AuthContext";
 
 export const CreatePost = ({ handleClose }) => {
   const [newPost, setNewPost] = useState("");
   const token = localStorage.getItem("token");
   const { postDispatch } = usePost();
+  const { authState } = useAuth();
 
   const addPost = async () => {
     try {
       const response = await fetch("/api/posts", {
         method: "POST",
         headers: {
-          authorization: token,
+          authorization: authState?.token,
         },
         body: JSON.stringify({ postData: { content: newPost } }),
       });
